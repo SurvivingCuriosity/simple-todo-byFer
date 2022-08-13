@@ -6,9 +6,13 @@ import './styles/style.css';
 import { FormularioNuevaTarea } from './components/FormularioNuevaTarea';
 import { Tarea } from './components/Tarea';
 function App() {
-  const [tareasLS, setTareasLS] = useLocalStorage("tareas",[]);
-  
+
+  const [tareasLS, setTareasLS] = useLocalStorage("tareas", []);
   const [tareas, setTareas] = React.useState(tareasLS);
+  
+  React.useEffect(()=>{
+    setTareasLS(tareas);
+  },[tareas])
 
   const userClicksAdd = (userText) => {
     setTareas(prev=>{
@@ -22,15 +26,11 @@ function App() {
       ]
     })
     
-  }
-  React.useEffect(()=>{
-    setTareasLS(tareas);
-  },[tareas])
-
+  } 
   const borrarTareas = () => {
     setTareas([]);
   }
-  function checkTarea(isChecked, idTarea){
+  const checkTarea = (isChecked, idTarea) =>{
     const newState = tareas.map(tarea => {
       if (tarea.id === idTarea) {
         return {...tarea, checked: isChecked};
