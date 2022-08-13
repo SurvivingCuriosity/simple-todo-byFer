@@ -1,0 +1,129 @@
+*{box-sizing: border-box;}
+:root{
+    /*COLORES*/
+    --negro: #111;
+    --negro2: #222;
+    --negro3: #333;
+    --blanco:#EEE;
+    --blanco2:#CCC;
+    --blanco3:#AAA;
+    --colorSobreNegro: rgb(228, 237, 58);
+    --colorSobreBlanco: rgb(27, 38, 163);
+}
+html[data-theme="dark"]{
+    --fondo: var(--negro);
+    --fondo2: var(--negro2);
+    --fondo3: var(--negro3);
+    --colorTexto: var(--blanco);
+}
+html[data-theme="light"]{
+    --fondo: var(--blanco);
+    --fondo2: var(--blanco2);
+    --fondo3: var(--blanco3);
+    --colorTexto: var(--negro);
+}
+html{font-family: 'Poppins', sans-serif;}
+body{
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--fondo);
+    color: var(--colorTexto);
+
+}
+/*ELEMENTOS SUELTOS*/
+h1{font-size: 3em;}
+h2{}
+h3{}
+a{text-decoration: none;}
+a:hover,button:hover{cursor: pointer;}
+input[type='text']{
+    border: none;
+    padding: 0.25em 0.5em;
+    border-radius: 5px;
+    width: 100%;
+    height: 2em;
+    background-color: var(--blanco2);
+    
+}
+::placeholder{
+    font-family: 'Poppins', sans-serif;
+}
+input[type='text']:focus{
+    border: 2px solid red;
+    background-color: var(--blanco2);
+}
+::-ms-check{
+    background-color: red;
+}
+/*FIN ELEMENTOS SUELTOS*/
+/*CLASES APOYO*/
+.pad-1{padding: 1em;}
+.pad-2{padding: 2em;}
+.pad-3{padding: 3em;}
+.full-screen-height{
+    min-height: 100vh;
+}
+.totally-centered{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column nowrap;
+}
+.horizontal-centered{
+    display: flex;
+    align-items: center;
+    flex-flow: column nowrap;
+}
+.vertical-centered{
+    display: flex;
+    justify-content: center;
+    flex-flow: column nowrap;
+}
+.caja{
+    padding: 0.75em;
+    margin: 0.5em;
+    background-color: var(--fondo2);
+}
+.input-and-button{
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    gap: 0.5em;
+    justify-content: space-between;
+}
+/*FIN CLASES APOYO*/
+
+/*TAREA */
+.tarea{
+    min-width: 90vw;
+    display: flex;
+    align-items: center;
+    background-color: var(--fondo2);
+    padding: 0.25em;
+    margin: 0.25em;
+    font-size: 1.2em;
+    border-radius: 6px;
+}
+.tarea p::first-letter{
+    font-size: 1.33em;
+}
+.tarea input:checked + p{
+    text-decoration: line-through;
+}
+.tarea input[type='checkbox']{
+    transform: scale(2);
+    margin: 0.75em;
+    margin-right: 1.5em;
+}
+.btn-borrar-tareas{
+    border:none;
+    background-color: transparent;
+    margin: 1em 1em 1em auto;
+    color: red;
+    text-decoration: underline;
+}
+.icono-borrar-tarea{
+    margin-left: auto;
+}
+.icono-borrar-tarea:hover{
+    cursor: pointer;
+}
