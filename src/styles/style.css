@@ -71,6 +71,7 @@ input[type='text']:focus{
     display: flex;
     align-items: center;
     flex-flow: column nowrap;
+    gap: 0.5em;
 }
 .vertical-centered{
     display: flex;
@@ -94,17 +95,22 @@ input[type='text']:focus{
 /*TAREA */
 .lista-tareas{
     display: flex;
+    background-color: var(--fondo3);
     flex-flow: column-reverse nowrap;
+    padding: 0.2em;
+    width: 100vw;
+    border-top: 1px solid var(--blanco);
 }
 .tarea{
     min-width: 90vw;
     display: flex;
     align-items: center;
-    background-color: var(--fondo2);
-    padding: 0.25em;
+    background-color: var(--fondo);
+    padding: 0.5em;
     margin: 0.25em;
     font-size: 1.2em;
     border-radius: 6px;
+    position: relative;
 }
 .tarea-li-container{
     
@@ -112,7 +118,18 @@ input[type='text']:focus{
 .tarea p::first-letter{
     font-size: 1.33em;
 }
+.tarea .fecha-tarea{
+    position: absolute;
+    font-size: 0.5em;
+    margin: 0.1em;
+    color: var(--blanco3);
+    bottom: 0.2em;
+    right: 1em;
+}
 .tarea input:checked + label{
+    text-decoration: line-through;
+}
+.subtarea-li-container input:checked + label{
     text-decoration: line-through;
 }
 .tarea input[type='checkbox']{
@@ -156,7 +173,7 @@ ul.preview-subtareas{
     padding: 0.5em;
 }
 .subtarea-li-container{
-    background-color: var(--fondo3);
+    background-color: var(--fondo2);
     padding: 0.25em;
     border-radius: 5px;
 }

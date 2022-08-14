@@ -33,6 +33,7 @@ export function Tarea(props){
                 </input>
 
                 <label htmlFor={props.tarea.id}>{props.tarea.titulo}</label>
+                <p className="fecha-tarea">{props.tarea.fecha}</p>
                 
                 {props.tarea.subtareas.length>0 && 
                     <img 

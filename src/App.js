@@ -5,6 +5,7 @@ import './styles/reset.css';
 import './styles/style.css';
 import { FormularioNuevaTarea } from './components/FormularioNuevaTarea';
 import { Tarea } from './components/Tarea';
+import { obtenFecha } from './helpers/fechas';
 function App() {
 
   const [tareasLS, setTareasLS] = useLocalStorage("tareas", []);
@@ -20,6 +21,7 @@ function App() {
         ...prev,
         {
           id:Date.now(),
+          fecha: obtenFecha(Date.now()),
           titulo:tituloTarea,
           checked:false,
           subtareas: subtareas || ''

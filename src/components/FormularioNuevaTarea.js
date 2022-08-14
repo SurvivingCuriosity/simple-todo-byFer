@@ -31,7 +31,7 @@ export function FormularioNuevaTarea(props){
           })
     }
     return(
-        <div className="caja" style={{width:'100%', borderBottom: '1px solid white'}}>
+        <div className="caja" style={{width:'100%'}}>
             
                 <form onSubmit={handleSubmit}>
                     <div className="input-and-button">
