@@ -14,22 +14,25 @@ function App() {
     setTareasLS(tareas);
   },[tareas])
 
-  const userClicksAdd = (userText) => {
+  const userCreatesTarea = (tituloTarea, subtareas) => {
     setTareas(prev=>{
       return[
         ...prev,
         {
           id:Date.now(),
-          text:userText,
-          checked:false
+          titulo:tituloTarea,
+          checked:false,
+          subtareas: subtareas || ''
         }
       ]
     })
     
   } 
+
   const borrarTareas = () => {
     setTareas([]);
   }
+
   const checkTarea = (isChecked, idTarea) =>{
     const newState = tareas.map(tarea => {
       if (tarea.id === idTarea) {
@@ -41,6 +44,30 @@ function App() {
 
     setTareas(newState);
   }
+
+  const checkSubTarea = (isChecked, idTarea, idTareaPadre) =>{
+    let substate;
+    tareas.map(tarea => {
+      if (tarea.id === idTareaPadre) {
+        substate=tarea.subtareas.map(subtarea=>{
+          if(subtarea.id===idTarea){
+            return {...subtarea, checked: isChecked}
+          }
+          return subtarea;
+        })
+      }
+      return tarea;
+    });
+
+    let newState = tareas.map(tarea => {
+      if (tarea.id === idTareaPadre) {
+        return {...tarea, subtareas: substate}
+      }
+      return tarea;
+    });
+    setTareas(newState);
+  }
+
   const eliminarTarea = (idTarea) => {
     setTareas(current =>
       current.filter(element => {
@@ -54,27 +81,29 @@ function App() {
         <h1>Tareas</h1>
         <p style={{padding:'0.75em'}}>Un texto motivador...</p>
         <FormularioNuevaTarea 
-          callback={userClicksAdd}
+          callback={userCreatesTarea}
         />
-        <>
-            {tareas.length<=0 
-            ?
-              <p>No hay tareas pendientes...</p>
-            :
-              tareas.map((tarea)=>{
-                return(
+        
+          {tareas.length<=0 
+          ?
+            <p>No hay tareas pendientes...</p>
+          :
+            <ul className='lista-tareas'>
+              {tareas.map((tarea)=>{
+              return(
                   <Tarea 
                     key={tarea.id}
                     id={tarea.id}
-                    text={tarea.text}
-                    isChecked={tarea.checked}
+                    tarea={tarea}
                     callbackCheck={checkTarea}
+                    callbackSubtareaCheck={checkSubTarea}
                     callbackBorrarTarea={eliminarTarea}
                   />
-                )
-              })
-            }
-        </>
+              )
+            })}
+            </ul>
+          }
+        
         {tareas.length>0 && <button onClick={borrarTareas} className='btn btn-borrar-tareas'>Borrar todas</button> }
     </div>
   );

@@ -1,38 +1,59 @@
 import React from "react";
-import icono_borrar_blanco from '../imgs/icono_borrar_blanco.svg'
+import icono_borrar_rojo from '../imgs/icono_borrar_rojo.svg'
+import icono_expandir_blanco from '../imgs/icono_expandir_blanco.svg'
+import { ListaSubtareas } from "./ListaSubtareas";
 
 export function Tarea(props){
-    const [checked, setChecked] = React.useState(props.isChecked);
+    const [checked, setChecked] = React.useState(props.tarea.checked);
+    const [mostrandoSubTareas, setMostrandoSubTareas] = React.useState(false);
     
     const handleChange = (evt) =>{
         setChecked(!checked)
     }
     const eliminarTarea = () =>{
-        props.callbackBorrarTarea(props.id);
+        props.callbackBorrarTarea(props.tarea.id);
     }
 
     React.useEffect(()=>{
-        props.callbackCheck(checked, props.id);
+        props.callbackCheck(checked, props.tarea.id);
     },[checked])
 
+    const subtareaCompletada = (checked, idTarea, idPadre) => {
+        props.callbackSubtareaCheck(checked, idTarea, idPadre);
+    }
     return(
-        <div className='tarea'>
-            <input 
-                type='checkbox' 
-                onChange={handleChange}
-                checked={checked}
-                >
-            </input>
+        <li className="tarea-li-container">
+            <div className='tarea'>
+                <input 
+                    type='checkbox' 
+                    onChange={handleChange}
+                    checked={checked}
+                    id={props.tarea.id}
+                    >
+                </input>
 
-            <p>{props.text}</p>
-            
-            {checked && 
-                <img 
-                    onClick={eliminarTarea}
-                    className='icono-borrar-tarea' 
-                    src={icono_borrar_blanco} 
-                    alt='icono borrar tarea'
-                ></img>}
-        </div>
+                <label htmlFor={props.tarea.id}>{props.tarea.titulo}</label>
+                
+                {props.tarea.subtareas.length>0 && 
+                    <img 
+                        onClick={()=>{setMostrandoSubTareas(!mostrandoSubTareas)}}
+                        className='icono-expandir-subtareas' 
+                        src={icono_expandir_blanco} 
+                        alt='icono mostrar subtareas'
+                    ></img>}
+
+                {checked && 
+                    <img 
+                        onClick={eliminarTarea}
+                        className='icono-borrar-tarea' 
+                        src={icono_borrar_rojo} 
+                        alt='icono borrar tarea'
+                    ></img>}
+            </div>
+            {
+                mostrandoSubTareas && <ListaSubtareas idPadre={props.tarea.id} subtareas={props.tarea.subtareas} callbackCheck={subtareaCompletada}/>
+            }
+        </li>
+        
     )
 }

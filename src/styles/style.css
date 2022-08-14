@@ -1,4 +1,4 @@
-*{box-sizing: border-box;}
+*{box-sizing: border-box;font-family: 'Poppins', sans-serif;}
 :root{
     /*COLORES*/
     --negro: #111;
@@ -92,6 +92,10 @@ input[type='text']:focus{
 /*FIN CLASES APOYO*/
 
 /*TAREA */
+.lista-tareas{
+    display: flex;
+    flex-flow: column-reverse nowrap;
+}
 .tarea{
     min-width: 90vw;
     display: flex;
@@ -102,10 +106,13 @@ input[type='text']:focus{
     font-size: 1.2em;
     border-radius: 6px;
 }
+.tarea-li-container{
+    
+}
 .tarea p::first-letter{
     font-size: 1.33em;
 }
-.tarea input:checked + p{
+.tarea input:checked + label{
     text-decoration: line-through;
 }
 .tarea input[type='checkbox']{
@@ -120,9 +127,37 @@ input[type='text']:focus{
     color: red;
     text-decoration: underline;
 }
+/*FORMULARIO NUEVA TAREA*/
+.btn-anadir-subtareas{
+    border: none;
+    background-color: transparent;
+    color: var(--textoColor);
+    text-decoration: underline;
+    padding: 1em;
+}
+.icono-expandir-subtareas,
 .icono-borrar-tarea{
     margin-left: auto;
 }
+.icono-expandir-subtareas:hover,
 .icono-borrar-tarea:hover{
     cursor: pointer;
 }
+ul.preview-subtareas{
+    padding: 1em;
+    list-style-type: decimal;
+    list-style-position: inside;
+}
+.lista-subtareas{
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 0.2em;
+    margin-left: 1em;
+    padding: 0.5em;
+}
+.subtarea-li-container{
+    background-color: var(--fondo3);
+    padding: 0.25em;
+    border-radius: 5px;
+}
+/*FIN FORMULARIO NUEVA TAREA*/
