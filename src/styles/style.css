@@ -50,8 +50,13 @@ input[type='text']:focus{
     border: none;
     background-color: var(--blanco2);
 }
-::-ms-check{
-    background-color: red;
+/*Esto elimina el cuadro azul onClick en moviles*/
+input,
+textarea,
+button,
+select,
+a {
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 /*FIN ELEMENTOS SUELTOS*/
 /*CLASES APOYO*/
