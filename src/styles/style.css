@@ -184,15 +184,14 @@ ul.preview-subtareas{
 }
 /*FIN FORMULARIO NUEVA TAREA*/
 .boton-claro-oscuro{
-    background-color: var(--blanco3);
-    width: 100px;
+    width: 80px;
     padding: 0.5em;
     border-radius: 40px;
     display: flex;
     flex-flow: row nowrap;
     position: absolute;
     top: 1.5em;
-    left: -50px;
+    left: -40px;
     justify-content: space-between;
 }
 .gira180{
