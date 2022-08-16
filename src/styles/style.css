@@ -178,3 +178,30 @@ ul.preview-subtareas{
     border-radius: 5px;
 }
 /*FIN FORMULARIO NUEVA TAREA*/
+.boton-claro-oscuro{
+    background-color: var(--blanco3);
+    width: 100px;
+    padding: 0.5em;
+    border-radius: 40px;
+    display: flex;
+    flex-flow: row nowrap;
+    position: absolute;
+    top: 1.5em;
+    left: -50px;
+    justify-content: space-between;
+}
+.gira180{
+    transform: rotate(180deg);
+    transition: transform 0.2s ease-in-out;
+}
+.gira-180{
+    transform: rotate(0deg);
+    transition: transform 0.2s ease-in-out;
+}
+.boton-claro-oscuro:hover{
+    cursor: pointer;
+}
+.boton-claro-oscuro img{
+    width: 1.5em;
+    transform: rotate(180deg);/*para que la luna se vea bien*/
+}

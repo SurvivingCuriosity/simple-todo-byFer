@@ -6,11 +6,15 @@ import './styles/style.css';
 import { FormularioNuevaTarea } from './components/FormularioNuevaTarea';
 import { Tarea } from './components/Tarea';
 import { obtenFecha } from './helpers/fechas';
+import { BotonClaroOscuro } from './components/BotonClaroOscuro';
 function App() {
 
   const [tareasLS, setTareasLS] = useLocalStorage("tareas", []);
+  const [tema, setTema] = useLocalStorage("tema", 'oscuro');
   const [tareas, setTareas] = React.useState(tareasLS);
-  
+  React.useEffect(()=>{
+    document.documentElement.setAttribute('data-theme', tema);
+  },[])
   React.useEffect(()=>{
     setTareasLS(tareas);
   },[tareas])
@@ -78,8 +82,24 @@ function App() {
     );
   }
 
+  const activarTema = (cual) => {
+    switch(cual){
+      case 'claro':
+        document.documentElement.setAttribute('data-theme', 'light');
+        setTema('light');
+        break;
+      case 'oscuro':
+        document.documentElement.setAttribute('data-theme', 'dark');
+        setTema('dark');
+        break;
+      default:
+    }
+  }
   return (
     <div className="horizontal-centered full-screen-height pad-2">
+        <BotonClaroOscuro 
+          temaActivo = {tema}
+          callback={activarTema}/>
         <h1>Tareas</h1>
         <p style={{padding:'0.75em'}}>Un texto motivador...</p>
         <FormularioNuevaTarea 
