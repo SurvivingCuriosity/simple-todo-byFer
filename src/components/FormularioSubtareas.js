@@ -1,6 +1,6 @@
 import React from "react";
-import icono_anadir_blanco from '../imgs/icono_anadir_blanco.svg'
-import icono_anadir_negro from '../imgs/icono_anadir_negro.svg'
+import icono_anadir_enabled from '../imgs/icono_anadir_enabled.svg'
+import icono_anadir_disabled from '../imgs/icono_anadir_disabled.svg'
 export function FormularioSubtareas(props){
     const [textSubtarea, setTextSubtarea] = React.useState('');
     const [mostrandoForm, setMostrandoForm] = React.useState(false);
@@ -12,19 +12,23 @@ export function FormularioSubtareas(props){
         if(textSubtarea==="") return;
         props.callback(textSubtarea)
         setTextSubtarea('')
+        setMostrandoForm(false);
     }
+
     const formSubTarea=(
-        <form onSubmit={handleSubmit} style={{marginLeft:'2em', padding:'1em'}}>
+        <form onSubmit={handleSubmit}>
             <div className="input-and-button">
                 <input
+                    autoFocus
                     onChange={handleChange}
                     value={textSubtarea}
                     type='text'
-                    placeholder='Introduce subtarea'
+                    placeholder={`Introduce subtareas`}
                 ></input>
                 <input
+                    onClick={handleSubmit}
                     type='image' 
-                    src={textSubtarea==="" ? icono_anadir_negro : icono_anadir_blanco} 
+                    src={textSubtarea==="" ? icono_anadir_disabled : icono_anadir_enabled} 
                     disabled={textSubtarea==="" ? true : false}
                     alt='icono nueva tarea' 
                     style={{width:'2em'}}>
@@ -35,6 +39,10 @@ export function FormularioSubtareas(props){
     return(
         <>
         {!mostrandoForm && <button
+                style={{border: 'none',
+                    marginRight: 'auto',
+                    padding: '0.2em',
+                textDecoration:'underline'}}
                 onClick={()=>{setMostrandoForm(!mostrandoForm)}}
                 className="btn-anadir-subtareas"
             >Añadir subtarea</button>}

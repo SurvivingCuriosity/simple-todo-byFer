@@ -1,6 +1,7 @@
 *{box-sizing: border-box;font-family: 'Poppins', sans-serif;}
 :root{
     /*COLORES*/
+    --negroTrans: #111111EF;
     --negro: #111;
     --negro2: #222;
     --negro3: #333;
@@ -40,7 +41,7 @@ input[type='text']{
     padding: 0.25em 0.5em;
     border-radius: 5px;
     width: 100%;
-    height: 2em;
+    height: 2.5em;
     background-color: var(--blanco2);
 }
 ::placeholder{
@@ -55,6 +56,7 @@ input,
 textarea,
 button,
 select,
+img,
 a {
   -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
@@ -76,7 +78,6 @@ a {
     display: flex;
     align-items: center;
     flex-flow: column nowrap;
-    gap: 0.5em;
 }
 .vertical-centered{
     display: flex;
@@ -95,6 +96,26 @@ a {
     gap: 0.5em;
     justify-content: space-between;
 }
+.boton:hover{
+    cursor: pointer;
+}
+.boton{
+    border: none;
+    border-radius: 5px;
+    padding: 0.5em 1em;
+    color: var(--blanco);
+    margin-top:2em;
+}
+.boton:disabled{
+    background-color: var(--fondo3);
+    color: var(--blanco);
+}
+.btn-success{
+    background-color: green;
+}
+.btn-cancel{
+    background-color: red;
+}
 /*FIN CLASES APOYO*/
 
 /*TAREA */
@@ -102,11 +123,10 @@ a {
     display: flex;
     background-color: var(--fondo3);
     flex-flow: column-reverse nowrap;
-    padding: 0.2em;
+    padding:1.2em 0.5em;
     width: 100vw;
-    border-top: 1px solid var(--blanco);
 }
-.tarea{
+.tarea-container{
     min-width: 90vw;
     display: flex;
     align-items: center;
@@ -116,14 +136,28 @@ a {
     font-size: 1.2em;
     border-radius: 6px;
     position: relative;
+    justify-content: space-between;
+    flex-direction: column;
 }
-.tarea-li-container{
-    
+.tarea-checkbox-container{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    width: 100%;
 }
-.tarea p::first-letter{
+.iconos-tarea-container{
+    display: flex;
+    flex-flow: row-reverse;
+}
+.iconos-tarea-container img{
+    aspect-ratio: 1;
+    width: 1.2em;
+    margin-bottom: 0.5em;
+}
+.tarea-container p::first-letter{
     font-size: 1.33em;
 }
-.tarea .fecha-tarea{
+.tarea-container .fecha-tarea{
     position: absolute;
     font-size: 0.5em;
     margin: 0.1em;
@@ -131,16 +165,17 @@ a {
     bottom: 0.2em;
     right: 1em;
 }
-.tarea input:checked + label{
+.tarea-container input:checked + label{
     text-decoration: line-through;
 }
 .subtarea-li-container input:checked + label{
     text-decoration: line-through;
 }
-.tarea input[type='checkbox']{
-    transform: scale(1.5);
-    margin: 0.75em;
-    margin-right: 1.5em;
+.tarea-container input[type='checkbox']{
+    transform: scale(1.33);
+}
+.tarea-container .subtarea-li-container input[type='checkbox']{
+    transform: scale(1);
 }
 .btn-borrar-tareas{
     border:none;
@@ -152,10 +187,11 @@ a {
 /*FORMULARIO NUEVA TAREA*/
 .btn-anadir-subtareas{
     border: none;
+    border-radius: 5px;
     background-color: transparent;
     color: var(--textoColor);
-    text-decoration: underline;
-    padding: 1em;
+    border:1px solid var(--colorTexto);
+    padding:0.5em 1em;
 }
 .icono-expandir-subtareas,
 .icono-borrar-tarea{
@@ -166,21 +202,34 @@ a {
     cursor: pointer;
 }
 ul.preview-subtareas{
-    padding: 1em;
-    list-style-type: decimal;
+    padding: 0em 1em;
+    list-style-type: disc;
     list-style-position: inside;
 }
 .lista-subtareas{
     display: flex;
     flex-flow: column nowrap;
     gap: 0.2em;
-    margin-left: 1em;
-    padding: 0.5em;
+    margin-left: 1.25em;
+    padding: 0.25em;
+    width: 95%;
 }
 .subtarea-li-container{
     background-color: var(--fondo2);
-    padding: 0.25em;
+    padding: 0.33em;
     border-radius: 5px;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    font-size: 0.8em;
+    gap: 0.3em;
+    min-height: 2.2em;
+}
+.subtarea-li-container img{
+    width: 1.25em;
+}
+.lista-subtareas .input-and-button{
+    margin-bottom: 0.5em;
 }
 /*FIN FORMULARIO NUEVA TAREA*/
 .boton-claro-oscuro{
@@ -208,4 +257,59 @@ ul.preview-subtareas{
 .boton-claro-oscuro img{
     width: 1.5em;
     transform: rotate(180deg);/*para que la luna se vea bien*/
+}
+
+.nav-categorias{
+    width: 100vw;
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 0.5em;
+    justify-content: flex-start;
+    overflow-y: scroll;
+}
+.nav-categorias .tab-header-categoria{
+    border-top-left-radius: 9px;
+    border-top-right-radius: 9px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+    padding: 0.74em 1.5em;
+}
+.nav-categorias .tab-header-categoria:hover{
+    cursor:pointer;
+}
+.categoria-activa{
+    background-color: var(--fondo3);
+}
+.nav-categorias-y-boton{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    width: 100vw;
+    padding: 0em 1em;
+    gap: 0.5em;
+}
+.form-nueva-categoria{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--negroTrans);
+    color: var(--blanco2);
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    z-index: 5;
+    padding-top: 2em;
+    padding-left: 2em;
+}
+.texto-click-volver{
+    margin-top: 5em;
+    font-size: 0.7em;
+    position: absolute;
+    bottom: 3em;
+    text-align: center;
+    left: 50%;
+    transform: translate(-50%, 0);
 }

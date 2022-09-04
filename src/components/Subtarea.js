@@ -1,5 +1,5 @@
 import React from "react";
-
+import icono_borrar_rojo from '../imgs/icono_borrar_rojo.svg'
 
 export function Subtarea(props){
     const {tarea, callbackCheck, idPadre}=props;
@@ -7,6 +7,9 @@ export function Subtarea(props){
     
     const handleChange = (evt) =>{
         setChecked(!checked)
+    }
+    const handleEliminarSubtarea = () =>{
+        props.callbackEliminarSubTarea(tarea.id, idPadre);
     }
 
     React.useEffect(()=>{
@@ -23,6 +26,13 @@ export function Subtarea(props){
                 >
             </input>
             <label htmlFor={tarea.id}>{tarea.text}</label>
+            {checked && 
+                    <img 
+                        onClick={handleEliminarSubtarea}
+                        className='icono-borrar-tarea' 
+                        src={icono_borrar_rojo} 
+                        alt='icono borrar tarea'
+                    ></img>}
             
         </li>
         
