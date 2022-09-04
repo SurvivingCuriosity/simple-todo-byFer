@@ -39,13 +39,24 @@ export function Tarea(props){
                         <label htmlFor={props.tarea.id}>{props.tarea.titulo}</label>
                     </div>
                     <div className="iconos-tarea-container">
-                        <img 
-                            style={{marginRight:'0.5em'}}
+
+                    {mostrandoSubTareas===true ? <img 
+                            style={{marginRight:'0.5em', transform:`rotate(180deg)`}}
                             onClick={()=>{setMostrandoSubTareas(!mostrandoSubTareas)}}
-                            className='icono-expandir-subtareas' 
+                            className='icono-expandir-subtareas animate-transform' 
                             src={icono_expandir_blanco} 
                             alt='icono mostrar subtareas'
-                        ></img>
+                        ></img>:
+                        <img 
+                        style={{marginRight:'0.5em', transform:`rotate(0deg)`}}
+                        onClick={()=>{setMostrandoSubTareas(!mostrandoSubTareas)}}
+                        className='icono-expandir-subtareas animate-transform' 
+                        src={icono_expandir_blanco} 
+                        alt='icono mostrar subtareas'
+                    ></img>}
+                        
+
+                        
 
                     {checked && 
                         <img 
