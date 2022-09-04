@@ -29,7 +29,7 @@ export function FormNuevaCategoria(props){
         handleBorrarCategoria(evt.target.name);
     }
     return(
-        <div className='form-nueva-categoria'>
+        <div className='form-nueva-categoria fade-in'>
             <p style={{fontSize:'1.7em', marginBottom:'0.5em',marginTop:'1em'}}>Crear nueva categoría</p>
             <form onSubmit={handleSubmit}>
                     <div className="input-and-button">

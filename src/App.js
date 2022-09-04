@@ -2,6 +2,7 @@ import React from 'react';
 import useLocalStorage from 'use-local-storage';
 import './styles/reset.css';
 import './styles/style.css';
+import './styles/animations.css';
 import { FormularioNuevaTarea } from './components/FormularioNuevaTarea';
 import { Tarea } from './components/Tarea';
 import { NavCategorias } from './components/NavCategorias';

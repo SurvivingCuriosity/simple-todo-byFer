@@ -29,7 +29,7 @@ export function Subtarea(props){
             {checked && 
                     <img 
                         onClick={handleEliminarSubtarea}
-                        className='icono-borrar-tarea' 
+                        className='icono-borrar-tarea animate-color-change' 
                         src={icono_borrar_rojo} 
                         alt='icono borrar tarea'
                     ></img>}

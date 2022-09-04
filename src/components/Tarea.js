@@ -7,6 +7,7 @@ import { ListaSubtareas } from "./ListaSubtareas";
 export function Tarea(props){
     const [checked, setChecked] = React.useState(props.tarea.checked);
     const [mostrandoSubTareas, setMostrandoSubTareas] = React.useState(false);
+
     
     const handleChange = (evt) =>{
         setChecked(!checked)
@@ -50,24 +51,25 @@ export function Tarea(props){
                         <img 
                             style={{marginRight:'0.5em'}}
                             onClick={eliminarTarea}
-                            className='icono-borrar-tarea' 
+                            className='icono-borrar-tarea fade-in' 
                             src={icono_borrar_rojo} 
                             alt='icono borrar tarea'
                         ></img>
                     }
                     </div>
                 </div>
-                
-                {
-                mostrandoSubTareas && 
-                    <ListaSubtareas 
-                        idPadre={props.tarea.id} 
-                        subtareas={props.tarea.subtareas} 
-                        callbackCheck={subtareaCompletada} 
-                        callbackEliminarSubTarea={props.callbackEliminarSubTarea}
-                        callbackNuevaSubtarea={props.callbackNuevaSubtarea}
-                    />
-                }
+                <div className="delay-fade-in">
+                    {
+                    mostrandoSubTareas && 
+                        <ListaSubtareas 
+                            idPadre={props.tarea.id} 
+                            subtareas={props.tarea.subtareas} 
+                            callbackCheck={subtareaCompletada} 
+                            callbackEliminarSubTarea={props.callbackEliminarSubTarea}
+                            callbackNuevaSubtarea={props.callbackNuevaSubtarea}
+                        />
+                    }
+                </div>
         </li>
 
     )

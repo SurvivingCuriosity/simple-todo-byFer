@@ -165,12 +165,11 @@ a {
     bottom: 0.2em;
     right: 1em;
 }
-.tarea-container input:checked + label{
-    text-decoration: line-through;
-}
+.tarea-container input:checked + label,
 .subtarea-li-container input:checked + label{
     text-decoration: line-through;
 }
+
 .tarea-container input[type='checkbox']{
     transform: scale(1.33);
 }
@@ -229,7 +228,7 @@ ul.preview-subtareas{
     width: 1.25em;
 }
 .lista-subtareas .input-and-button{
-    margin-bottom: 0.5em;
+    margin: 0.5em 0em;
 }
 /*FIN FORMULARIO NUEVA TAREA*/
 .boton-claro-oscuro{

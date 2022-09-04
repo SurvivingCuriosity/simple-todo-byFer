@@ -27,6 +27,7 @@ export function FormularioSubtareas(props){
                 ></input>
                 <input
                     onClick={handleSubmit}
+                    className='animate-color-change'
                     type='image' 
                     src={textSubtarea==="" ? icono_anadir_disabled : icono_anadir_enabled} 
                     disabled={textSubtarea==="" ? true : false}

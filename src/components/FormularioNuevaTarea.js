@@ -10,10 +10,17 @@ export function FormularioNuevaTarea(props){
     const [categoria, setCategoria] = React.useState(props.categoriaActiva==='Todas' ? '' : props.categoriaActiva);
     const [textoCategoria, setTextoCategoria] = React.useState('');
     const [subTareas, setSubTareas] = React.useState([]);
+    const [clase, setClase] = React.useState('height-1');
 
     const handleChange = evt => {
         setTituloTarea(evt.target.value)
     }
+    React.useEffect(()=>{
+        if(tituloTarea!==''){
+            setClase('height-2')
+        }
+    },[tituloTarea])
+
     React.useEffect(()=>{
         if(props.categoriaActiva==='Todas'){
             setCategoria('')
@@ -116,8 +123,7 @@ export function FormularioNuevaTarea(props){
     }
     
     return(
-        <div className="caja" style={{width:'95vw'}}>
-            
+        <div className={`caja animate-height ${tituloTarea==="" ? 'height-1' : 'height-2'}`} style={{width:'95vw'}}>
                 <form>
                     <div className="input-and-button">
                         <label>Tarea: </label>
@@ -133,41 +139,43 @@ export function FormularioNuevaTarea(props){
                     
 
                     {tituloTarea!=='' && 
-                    <>
-                        <div className="input-and-button">
-                            <label>Categoría: </label>
-                            <Select 
-                                isOptionSelected={true}
-                                defaultValue={props.categoriaActiva==='Todas' ? '' : {label: props.categoriaActiva, value: props.categoriaActiva}}
-                                isClearable
-                                isSearchable={false}
-                                onChange={handleChangeCategoria}
-                                onInputChange={handleInputCategoria}
-                                options={options} 
-                                styles={customStyles}
-                                placeholder={'Sin categoría'}
-                                noOptionsMessage={() => <p>{textoCategoria==="" ? 'No hay categorías' : `No existe '${textoCategoria.trim()}'`}</p>}
-                            />
-                        </div>
-                        
-                        <div className="input-and-button">
-                            <label>Subtarea: </label>
-                            <FormularioSubtareas 
-                                tareaMadre={tituloTarea}
-                                callback={nuevaSubTarea}
-                            />
-                        </div>
-                        {
-                        subTareas.length>0 && 
-                        <PreviewSubtareas 
-                            tareas={subTareas}
-                        />
-                        }
-                        <div className="input-and-button">
-                            <button disabled={tituloTarea==="" ? true : false} className="boton btn-success" onClick={handleSubmit}>Añadir tarea</button>
-                            <button className="boton btn-cancel" onClick={limpiaCampos}>Cancelar</button>
-                        </div>
-                    </>
+
+                            <div className="delay-fade-in" style={{opacity:0}}>
+                                <div className="input-and-button">
+                                    <label>Categoría: </label>
+                                    <Select 
+                                        isOptionSelected={true}
+                                        defaultValue={props.categoriaActiva==='Todas' ? '' : {label: props.categoriaActiva, value: props.categoriaActiva}}
+                                        isClearable
+                                        isSearchable={false}
+                                        onChange={handleChangeCategoria}
+                                        onInputChange={handleInputCategoria}
+                                        options={options} 
+                                        styles={customStyles}
+                                        placeholder={'Sin categoría'}
+                                        noOptionsMessage={() => <p>{textoCategoria==="" ? 'No hay categorías' : `No existe '${textoCategoria.trim()}'`}</p>}
+                                    />
+                                </div>
+                                
+                                <div className="input-and-button">
+                                    <label>Subtarea: </label>
+                                    <FormularioSubtareas 
+                                        tareaMadre={tituloTarea}
+                                        callback={nuevaSubTarea}
+                                    />
+                                </div>
+                                {
+                                subTareas.length>0 && 
+                                <PreviewSubtareas 
+                                    tareas={subTareas}
+                                />
+                                }
+                                <div className="input-and-button">
+                                    <button disabled={tituloTarea==="" ? true : false} className="boton btn-success" onClick={handleSubmit}>Añadir tarea</button>
+                                    <button className="boton btn-cancel" onClick={limpiaCampos}>Cancelar</button>
+                                </div>
+                            </div>
+
                     }
                 
                 </form>
