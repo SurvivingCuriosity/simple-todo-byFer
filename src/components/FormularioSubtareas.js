@@ -43,6 +43,7 @@ export function FormularioSubtareas(props){
                 style={{border: 'none',
                     marginRight: 'auto',
                     padding: '0.2em',
+                    color: '#777',
                 textDecoration:'underline'}}
                 onClick={()=>{setMostrandoForm(!mostrandoForm)}}
                 className="btn-anadir-subtareas"

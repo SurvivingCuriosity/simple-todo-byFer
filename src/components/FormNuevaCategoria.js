@@ -30,28 +30,7 @@ export function FormNuevaCategoria(props){
     }
     return(
         <div className='form-nueva-categoria fade-in'>
-            <p style={{fontSize:'1.7em', marginBottom:'0.5em',marginTop:'1em'}}>Crear nueva categoría</p>
-            <form onSubmit={handleSubmit}>
-                    <div className="input-and-button">
-                        <input
-                            onChange={handleChange}
-                            value={tituloCategoria}
-                            type='text'
-                            placeholder='Titulo de la categoría'
-                        ></input>
-                        <input
-                            onClick={handleSubmit}
-                            className='input-crear-cat'
-                            type='image' 
-                            src={tituloCategoria==="" ? icono_anadir_disabled : icono_anadir_enabled} 
-                            disabled={tituloCategoria==="" ? true : false}
-                            alt='icono nueva categoría' 
-                            style={{width:'2em'}}>
-                        </input>
-                    </div>
-                </form>
-                <p style={{fontSize:'1.7em', marginBottom:'0.5em',marginTop:'1em'}}>Borrar categoría</p>
-                <div>
+            <h2 classNAME='' style={{fontSize:'2.25em', marginBottom:'0.5em',marginTop:'0.25em'}}>Categorías</h2>
                 <ul>
                     {props.categorias.length > 0 
                     ?
@@ -70,8 +49,28 @@ export function FormNuevaCategoria(props){
                     :
                         <p style={{fontSize:'0.7em'}}>No has creado ninguna categoría</p>
                     }
-                    </ul>
-                </div>
+                </ul>
+            
+                <p style={{fontSize:'1.7em', marginBottom:'0.5em',marginTop:'1em'}}>Nueva categoría</p>
+                <form onSubmit={handleSubmit}>
+                    <div className="input-and-button">
+                        <input
+                            onChange={handleChange}
+                            value={tituloCategoria}
+                            type='text'
+                            placeholder='Titulo de la categoría'
+                        ></input>
+                        <input
+                            onClick={handleSubmit}
+                            className='input-crear-cat'
+                            type='image' 
+                            src={tituloCategoria==="" ? icono_anadir_disabled : icono_anadir_enabled} 
+                            disabled={tituloCategoria==="" ? true : false}
+                            alt='icono nueva categoría' 
+                            style={{width:'2em'}}>
+                        </input>
+                    </div>
+            </form>
                 <p className='texto-click-volver'>Click en cualquier sitio para volver</p>
         </div>
     )

@@ -8,6 +8,7 @@ import { Tarea } from './components/Tarea';
 import { NavCategorias } from './components/NavCategorias';
 import { BotonClaroOscuro } from './components/BotonClaroOscuro';
 import { obtenFecha } from './helpers/fechas';
+import { categoriasDefault } from './data/categoriasDefault';
 
 function App() {
 	const [tareasLS, setTareasLS] = useLocalStorage("tareas", []);
@@ -19,7 +20,7 @@ function App() {
 //Son las tareas de la categoria activa	(inicialmente son todas)
 	const [tareasCategoria, setTareasCategoria] = React.useState(tareas);
 
-	const [categoriaActiva, setCategoriaActiva] = React.useState('Todas');
+	const [categoriaActiva, setCategoriaActiva] = React.useState(categoriasDefault[0]);
 
 	const [tema, setTema] = useLocalStorage("tema", 'dark');
 
@@ -36,8 +37,8 @@ function App() {
 
 //Cuando se añade una tarea o cambia categoriaActiva, hay que actualizar tareasCategorias para que se renderice en pantalla
 	React.useEffect(()=>{
-		if(categoriaActiva==='Todas'){
-			setTareasCategoria(()=>{return(tareas)});
+		if(categoriaActiva===categoriasDefault[0]){
+			setTareasCategoria(()=>{return(obtenerTareasCategoria(categoriaActiva))});
 		}else{
 			setTareasCategoria(tareas.filter(tarea => tarea.categoria==categoriaActiva));
 		}
@@ -55,9 +56,18 @@ function App() {
 	}
 
 	const userBorraCategoria = (titulo) => {
-		let filteredArray = categorias.filter(cat => cat !== titulo)
-		setCategorias(filteredArray);
-		setCategoriaActiva('Todas')
+		let nuevasCategorias = categorias.filter(cat => cat !== titulo)
+		borrarNotasDeCategoria(titulo);
+		setCategorias(nuevasCategorias);
+		setCategoriaActiva(categoriasDefault[0])
+	}
+
+	const borrarNotasDeCategoria = (tituloCategoria) => {
+		setTareas(current =>
+			current.filter(element => {
+				return element.categoria !== tituloCategoria;
+			}),
+		);
 	}
 
 	const cambiarCategoriaActiva = (titulo) => {
@@ -80,21 +90,19 @@ function App() {
 		})
 	}
 
-	const borrarTareas = () => {
-		setTareas([]);
-		setCategoriaActiva('Todas');
-	}
-	const borrarTareasCategoria = () => {
-		setTareas([]);
-		setCategoriaActiva('Todas');
-	}
-	
-	const eliminarTarea = (idTarea) => {
+	const eliminarTareaConId = (idTarea) => {
 		setTareas(current =>
 			current.filter(element => {
 				return element.id !== idTarea;
 			}),
 		);
+	}
+
+	const obtenerTareasCategoria = (tituloCategoria) => {
+		const nuevasTareas = tareas.filter(tarea => {
+			return tarea.categoria === tituloCategoria;
+		})
+		return nuevasTareas;
 	}
 
 	const checkTarea = (isChecked, idTarea) =>{
@@ -211,8 +219,8 @@ function App() {
 	<ul className='lista-tareas'>
 		{
 			(tareasCategoria.length<=0) 
-			?	<p style={{backgroundColor:'var(--fondo3)',textAlign:'center'}}>No hay tareas pendientes...</p>
-			: 	tareasCategoria.map(tarea=>{
+			?	<p style={{backgroundColor:'var(--fondo3)', textAlign:'center'}}>No hay tareas pendientes...</p>
+			: 		tareasCategoria.map(tarea=>{
 					return(
 						<Tarea 
 							key={tarea.id}
@@ -220,7 +228,7 @@ function App() {
 							tarea={tarea}
 							callbackCheck={checkTarea}
 							callbackSubtareaCheck={checkSubTarea}
-							callbackBorrarTarea={eliminarTarea}
+							callbackBorrarTarea={eliminarTareaConId}
 							callbackEliminarSubTarea={eliminarSubTarea}
 							callbackNuevaSubtarea={nuevaSubtarea}
 							/>

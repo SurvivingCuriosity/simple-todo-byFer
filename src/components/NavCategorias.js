@@ -1,6 +1,8 @@
 import React from "react";
 import icono_anadir_enabled from '../imgs/icono_anadir_enabled.svg'
 import { FormNuevaCategoria } from "./FormNuevaCategoria";
+import { categoriasDefault } from "../data/categoriasDefault";
+
 export function NavCategorias (props) {
 
     const [mostrandoFormNuevaCategoria, setMostrandoFormNuevaCategoria] = React.useState(false)
@@ -37,7 +39,7 @@ export function NavCategorias (props) {
                 />}
             <img src={icono_anadir_enabled} onClick={muestraFormNuevaCategoria}></img>
             <div className='nav-categorias'>
-                <div className={`tab-header-categoria animate-color-change ${(props.categoriaActiva==='Todas')? `categoria-activa` : ``}`} onClick={userClicksCategoria}>Todas</div>
+                <div className={`tab-header-categoria animate-color-change ${(props.categoriaActiva===categoriasDefault[0])? `categoria-activa` : ``}`} onClick={userClicksCategoria}>{categoriasDefault[0]}</div>
                 {props.categorias.map((cat)=>{
                     return(
                         <div key={cat+Date.now()} className={`tab-header-categoria ${(props.categoriaActiva===cat)? `categoria-activa` : ``}`} onClick={userClicksCategoria}>{cat}</div>

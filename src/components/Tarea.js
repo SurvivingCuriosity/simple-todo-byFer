@@ -1,7 +1,6 @@
 import React from "react";
 import icono_borrar_rojo from '../imgs/icono_borrar_rojo.svg'
-import icono_expandir_blanco from '../imgs/icono_expandir_blanco.svg'
-import icono_cruz_blanco from '../imgs/icono_cruz_blanco.svg'
+import icono_expandir_gris from '../imgs/icono_expandir_gris.svg'
 import { ListaSubtareas } from "./ListaSubtareas";
 
 export function Tarea(props){
@@ -36,7 +35,7 @@ export function Tarea(props){
                             >
                         </input>
 
-                        <label htmlFor={props.tarea.id}>{props.tarea.titulo}</label>
+                        <label htmlFor={props.tarea.id}>{props.tarea.titulo}</label><span>{`(${props.tarea.subtareas.length})`}</span>
                     </div>
                     <div className="iconos-tarea-container">
 
@@ -44,14 +43,14 @@ export function Tarea(props){
                             style={{marginRight:'0.5em', transform:`rotate(180deg)`}}
                             onClick={()=>{setMostrandoSubTareas(!mostrandoSubTareas)}}
                             className='icono-expandir-subtareas animate-transform' 
-                            src={icono_expandir_blanco} 
+                            src={icono_expandir_gris} 
                             alt='icono mostrar subtareas'
                         ></img>:
                         <img 
                         style={{marginRight:'0.5em', transform:`rotate(0deg)`}}
                         onClick={()=>{setMostrandoSubTareas(!mostrandoSubTareas)}}
                         className='icono-expandir-subtareas animate-transform' 
-                        src={icono_expandir_blanco} 
+                        src={icono_expandir_gris} 
                         alt='icono mostrar subtareas'
                     ></img>}
                         
