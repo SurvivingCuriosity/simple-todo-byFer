@@ -110,10 +110,10 @@ a {
     color: var(--blanco);
 }
 .btn-success{
-    background-color: green;
+    background-color: #23C552;
 }
 .btn-cancel{
-    background-color: red;
+    background-color: #F84F31;
 }
 /*FIN CLASES APOYO*/
 
