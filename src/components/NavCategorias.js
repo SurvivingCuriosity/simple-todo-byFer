@@ -39,7 +39,7 @@ export function NavCategorias (props) {
                 />}
             <img src={icono_anadir_enabled} onClick={muestraFormNuevaCategoria}></img>
             <div className='nav-categorias'>
-                <div className={`tab-header-categoria animate-color-change ${(props.categoriaActiva===categoriasDefault[0])? `categoria-activa` : ``}`} onClick={userClicksCategoria}>{categoriasDefault[0]}</div>
+                <div className={`tab-header-categoria animate-color-change ${(props.categoriaActiva===categoriasDefault[0])? `categoria-activa` : ``}`} onClick={userClicksCategoria}>Sin categoría</div>
                 {props.categorias.map((cat)=>{
                     return(
                         <div key={cat+Date.now()} className={`tab-header-categoria ${(props.categoriaActiva===cat)? `categoria-activa` : ``}`} onClick={userClicksCategoria}>{cat}</div>

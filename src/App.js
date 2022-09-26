@@ -33,6 +33,8 @@ function App() {
 
 	React.useEffect(()=>{
 		setTareasLS(tareas);
+		console.log('Cambian tareas');
+		console.log(tareas);
 	},[tareas])
 
 //Cuando se añade una tarea o cambia categoriaActiva, hay que actualizar tareasCategorias para que se renderice en pantalla

@@ -1,1 +1,1 @@
-export const categoriasDefault = ['Sin categoria']
+export const categoriasDefault = ['']

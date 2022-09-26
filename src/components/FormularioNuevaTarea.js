@@ -145,7 +145,7 @@ export function FormularioNuevaTarea(props){
                                     <label>Categoría: </label>
                                     <Select 
                                         isOptionSelected={true}
-                                        defaultValue={props.categoriaActiva==='Todas' ? '' : {label: props.categoriaActiva, value: props.categoriaActiva}}
+                                        defaultValue={props.categoriaActiva==='' ? 'Sin categoría' : {label: props.categoriaActiva, value: props.categoriaActiva}}
                                         isClearable
                                         isSearchable={false}
                                         onChange={handleChangeCategoria}
