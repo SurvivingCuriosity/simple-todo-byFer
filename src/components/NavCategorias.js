@@ -11,17 +11,16 @@ export function NavCategorias (props) {
         if(evt.target.className==='nav-categorias'){
             return
         }
+
         props.callbackCategoriaActiva(evt.target.textContent);
     }
     const muestraFormNuevaCategoria = (evt) => {
         setMostrandoFormNuevaCategoria(true);
     }
     const crearCategoria = (titulo) => {
-        console.log('Creando categoria '+titulo);
         props.callbackCrearCategoria(titulo);
     }
     const userBorraCategoria = (titulo) => {
-        console.log('Borrando categoria '+titulo);
         props.callbackBorrarCategoria(titulo);
     }
     const userClosesForm = (evt) => {

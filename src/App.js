@@ -20,12 +20,15 @@ function App() {
 //Son las tareas de la categoria activa	(inicialmente son todas)
 	const [tareasCategoria, setTareasCategoria] = React.useState(tareas);
 
-	const [categoriaActiva, setCategoriaActiva] = React.useState(categoriasDefault[0]);
+	const [categoriaActivaLS, setCategoriaActivaLS] = useLocalStorage("categoriaActiva", '');
+	const [categoriaActiva, setCategoriaActiva] = React.useState(categoriaActivaLS || '');
 
 	const [tema, setTema] = useLocalStorage("tema", 'dark');
 
 //Establece el tema por defecto
-	React.useEffect(()=>{document.documentElement.setAttribute('data-theme', tema);},[])
+	React.useEffect(()=>{
+		document.documentElement.setAttribute('data-theme', tema);
+	},[])
 
 //Cuando cambian las categorias, las anado al localstorage
 	React.useEffect(()=>{setCategoriasLS(categorias);},[categorias])
@@ -33,18 +36,17 @@ function App() {
 
 	React.useEffect(()=>{
 		setTareasLS(tareas);
-		console.log('Cambian tareas');
-		console.log(tareas);
 	},[tareas])
 
 //Cuando se añade una tarea o cambia categoriaActiva, hay que actualizar tareasCategorias para que se renderice en pantalla
 	React.useEffect(()=>{
-		if(categoriaActiva===categoriasDefault[0]){
+		setCategoriaActivaLS(categoriaActiva)
+		if(categoriaActiva===''){
 			setTareasCategoria(()=>{return(obtenerTareasCategoria(categoriaActiva))});
 		}else{
 			setTareasCategoria(tareas.filter(tarea => tarea.categoria==categoriaActiva));
 		}
-	},[categoriaActiva,tareas])
+	},[categoriaActiva, tareas])
 
 //FUNCIONES DE CATEGORIAS
 	const userCreatesCategoria = (titulo) => {
@@ -73,7 +75,11 @@ function App() {
 	}
 
 	const cambiarCategoriaActiva = (titulo) => {
-		setCategoriaActiva(titulo);
+		if(titulo==='Sin categoría'){
+			setCategoriaActiva('');
+		}else{
+			setCategoriaActiva(titulo);
+		}
 	}
 //FUNCIONES DE TAREAS
 	const userCreatesTarea = (tituloTarea, subtareas, categoria) => {

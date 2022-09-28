@@ -30,7 +30,7 @@ export function FormNuevaCategoria(props){
     }
     return(
         <div className='form-nueva-categoria fade-in'>
-            <h2 classNAME='' style={{fontSize:'2.25em', marginBottom:'0.5em',marginTop:'0.25em'}}>Categorías</h2>
+            <h2 className='' style={{fontSize:'2.25em', marginBottom:'0.5em',marginTop:'0.25em'}}>Categorías</h2>
                 <ul>
                     {props.categorias.length > 0 
                     ?
