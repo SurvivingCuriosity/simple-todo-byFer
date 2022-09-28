@@ -3,5 +3,4 @@ export const obtenFecha = objetoDate => {
     let date = new Date(objetoDate)
     let formatted_date = date.getDate() + "-" + months[date.getMonth()] + "-" + date.getFullYear()
     return formatted_date;
-
 }

@@ -1,9 +1,8 @@
 import React from "react";
 import {FormularioSubtareas} from './FormularioSubtareas'
 import { PreviewSubtareas } from "./PreviewSubtareas";
-import icono_anadir_enabled from '../imgs/icono_anadir_enabled.svg'
-import icono_anadir_disabled from '../imgs/icono_anadir_disabled.svg'
 import Select from 'react-select';
+
 export function FormularioNuevaTarea(props){
 
     const [tituloTarea, setTituloTarea] = React.useState('');
@@ -11,6 +10,7 @@ export function FormularioNuevaTarea(props){
     const [textoCategoria, setTextoCategoria] = React.useState('');
     const [subTareas, setSubTareas] = React.useState([]);
     const [clase, setClase] = React.useState('height-1');
+    
 
     const handleChange = evt => {
         setTituloTarea(evt.target.value)
@@ -18,6 +18,8 @@ export function FormularioNuevaTarea(props){
     React.useEffect(()=>{
         if(tituloTarea!==''){
             setClase('height-2')
+            let clientHeight = document.getElementById('animate-heigth').clientHeight;
+            console.log(clientHeight); 
         }
     },[tituloTarea])
 
@@ -68,13 +70,12 @@ export function FormularioNuevaTarea(props){
         return(
             {value:cat,label:cat}
             )
-        })
-        const customStyles = {
-            container: (provided, state) => ({
-                ...provided,
-                margin:'1em 0em',
-                width: '100%'
-            }),
+    })
+    const customStyles = {
+        container: (provided, state) => ({
+            ...provided,
+            width: '100%'
+        }),
         option: (provided) => ({
             ...provided,
             borderBottom: '1px solid var(--colorTextoColor)',
@@ -121,11 +122,13 @@ export function FormularioNuevaTarea(props){
     }
     
     return(
-        <div className={`caja animate-height ${tituloTarea==="" ? 'height-1' : 'height-2'}`} style={{width:'95vw'}}>
-                <form>
+        <div id='animate-heigth' className={`caja animate-height ${tituloTarea==="" ? 'height-1' : 'height-2'}`} style={{width:'95vw'}}>
+                <form style={{display:'flex', flexFlow:'column',gap:'1em'}} onSubmit={handleSubmit}>
+                    
                     <div className="input-and-button">
                         <label>Tarea: </label>
                         <input
+                            autoFocus
                             onChange={handleChange}
                             value={tituloTarea}
                             type='text'
@@ -137,12 +140,14 @@ export function FormularioNuevaTarea(props){
                     
 
                     {tituloTarea!=='' && 
-                        <div className="delay-fade-in" style={{opacity:0}}>
-                            <div className="input-and-button">
-                                <label>Categoría: </label>
+                        <div className="delay-fade-in" style={{opacity:'0',display:'flex', flexFlow:'column',gap:'1em'}}>
+                            <div style={{alignItems: 'flex-start'}} className="input-and-button">
+                                <label style={{marginTop: '0.45em'}}>Categoría: </label>
                                 <Select 
                                     isOptionSelected={true}
-                                    defaultValue={{label: props.categoriaActiva, value: props.categoriaActiva}}
+                                    defaultValue={props.categoriaActiva === '' 
+                                        ? {label: 'Sin categoría', value: props.categoriaActiva}
+                                        : {label: props.categoriaActiva, value: props.categoriaActiva}}
                                     isClearable
                                     isSearchable={false}
                                     onChange={handleChangeCategoria}
@@ -163,12 +168,13 @@ export function FormularioNuevaTarea(props){
                             </div>
                             {
                             subTareas.length>0 && 
-                                <PreviewSubtareas 
+                                <PreviewSubtareas   
+                                    tareaMadre={tituloTarea}
                                     tareas={subTareas}
                                 />
                             }
                             <div className="input-and-button">
-                                <button disabled={tituloTarea==="" ? true : false} className="boton btn-success" onClick={handleSubmit}>Añadir tarea</button>
+                                <input type='submit' disabled={tituloTarea==="" ? true : false} className="boton btn-success" value='Añadir tarea'></input>
                                 <button className="boton btn-cancel" onClick={limpiaCampos}>Cancelar</button>
                             </div>
                         </div>

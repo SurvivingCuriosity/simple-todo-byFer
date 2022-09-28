@@ -26,26 +26,16 @@ function App() {
 	const [tema, setTema] = useLocalStorage("tema", 'dark');
 
 //Establece el tema por defecto
-	React.useEffect(()=>{
-		document.documentElement.setAttribute('data-theme', tema);
-	},[])
+	React.useEffect(()=>{ document.documentElement.setAttribute('data-theme', tema); },[])
 
 //Cuando cambian las categorias, las anado al localstorage
 	React.useEffect(()=>{setCategoriasLS(categorias);},[categorias])
-
-
-	React.useEffect(()=>{
-		setTareasLS(tareas);
-	},[tareas])
+	React.useEffect(()=>{ setTareasLS(tareas); },[tareas])
 
 //Cuando se añade una tarea o cambia categoriaActiva, hay que actualizar tareasCategorias para que se renderice en pantalla
 	React.useEffect(()=>{
 		setCategoriaActivaLS(categoriaActiva)
-		if(categoriaActiva===''){
-			setTareasCategoria(()=>{return(obtenerTareasCategoria(categoriaActiva))});
-		}else{
-			setTareasCategoria(tareas.filter(tarea => tarea.categoria==categoriaActiva));
-		}
+		setTareasCategoria(tareas.filter(tarea => tarea.categoria==categoriaActiva));
 	},[categoriaActiva, tareas])
 
 //FUNCIONES DE CATEGORIAS
@@ -60,8 +50,8 @@ function App() {
 	}
 
 	const userBorraCategoria = (titulo) => {
-		let nuevasCategorias = categorias.filter(cat => cat !== titulo)
 		borrarNotasDeCategoria(titulo);
+		let nuevasCategorias = categorias.filter(cat => cat !== titulo)
 		setCategorias(nuevasCategorias);
 		setCategoriaActiva(categoriasDefault[0])
 	}
@@ -75,6 +65,7 @@ function App() {
 	}
 
 	const cambiarCategoriaActiva = (titulo) => {
+		//titulo hace referencia al texto que hay en las pestañas...
 		if(titulo==='Sin categoría'){
 			setCategoriaActiva('');
 		}else{
@@ -206,47 +197,48 @@ function App() {
 	}
 
 	return (
-	<div className="horizontal-centered full-screen-height pad-2">
-		<BotonClaroOscuro 
-			temaActivo = {tema}
-			callback={activarTema}/>
-		<h1>Tareas</h1>
-		<p style={{padding:'0.75em'}}>Un texto motivador...</p>
-		<FormularioNuevaTarea
-			categoriaActiva={categoriaActiva}
-			categorias={categorias}
-			callback={userCreatesTarea}
-		/>
-		<NavCategorias 
-			categorias={categorias}
-			categoriaActiva={categoriaActiva}
-			callbackCrearCategoria={userCreatesCategoria}
-			callbackBorrarCategoria={userBorraCategoria}
-			callbackCategoriaActiva={cambiarCategoriaActiva}
-		/>
-	<ul className='lista-tareas'>
-		{
-			(tareasCategoria.length<=0) 
-			?	<p style={{backgroundColor:'var(--fondo3)', textAlign:'center'}}>No hay tareas pendientes...</p>
-			: 		tareasCategoria.map(tarea=>{
-					return(
-						<Tarea 
-							key={tarea.id}
-							id={tarea.id}
-							tarea={tarea}
-							callbackCheck={checkTarea}
-							callbackSubtareaCheck={checkSubTarea}
-							callbackBorrarTarea={eliminarTareaConId}
-							callbackEliminarSubTarea={eliminarSubTarea}
-							callbackNuevaSubtarea={nuevaSubtarea}
-							/>
-					)
-				})
-		}
-	</ul>
 
-	{/*tareas.length>0 && <button onClick={borrarTareas} className='btn btn-borrar-tareas'>Borrar todas</button> */}
-	</div>
+		<div className="horizontal-centered full-screen-height pad-2">
+			<BotonClaroOscuro 
+				temaActivo = {tema}
+				callback={activarTema}/>
+			<h1>Tareas</h1>
+			<p style={{padding:'0.75em'}}>Un texto motivador...</p>
+			<FormularioNuevaTarea
+				categoriaActiva={categoriaActiva}
+				categorias={categorias}
+				callback={userCreatesTarea}
+			/>
+			<NavCategorias 
+				categorias={categorias}
+				categoriaActiva={categoriaActiva}
+				callbackCrearCategoria={userCreatesCategoria}
+				callbackBorrarCategoria={userBorraCategoria}
+				callbackCategoriaActiva={cambiarCategoriaActiva}
+			/>
+			<ul className='lista-tareas'>
+				{
+					(tareasCategoria.length<=0) 
+					?	<p style={{backgroundColor:'var(--fondo3)', textAlign:'center'}}>No hay tareas pendientes...</p>
+					: 		tareasCategoria.map(tarea=>{
+							return(
+								<Tarea 
+									key={tarea.id}
+									id={tarea.id}
+									tarea={tarea}
+									callbackCheck={checkTarea}
+									callbackSubtareaCheck={checkSubTarea}
+									callbackBorrarTarea={eliminarTareaConId}
+									callbackEliminarSubTarea={eliminarSubTarea}
+									callbackNuevaSubtarea={nuevaSubtarea}
+									/>
+							)
+						})
+				}
+			</ul>
+
+		</div>
+		
 	);
 
 }

@@ -16,10 +16,9 @@ export function FormularioSubtareas(props){
     }
 
     const formSubTarea=(
-        <form onSubmit={handleSubmit}>
+
             <div className="input-and-button">
                 <input
-                    autoFocus
                     onChange={handleChange}
                     value={textSubtarea}
                     type='text'
@@ -35,22 +34,24 @@ export function FormularioSubtareas(props){
                     style={{width:'2em'}}>
                 </input>
             </div>
-        </form>
     )
     return(
         <>
-        {!mostrandoForm && <button
-                style={{border: 'none',
-                    marginRight: 'auto',
-                    padding: '0.2em',
-                    color: '#777',
-                textDecoration:'underline'}}
-                onClick={()=>{setMostrandoForm(!mostrandoForm)}}
-                className="btn-anadir-subtareas"
-            >Añadir subtarea</button>}
             
-
-            {mostrandoForm && formSubTarea}
+            {mostrandoForm 
+            ?
+                formSubTarea
+            :
+                <button
+                    style={{border: 'none',
+                        marginRight: 'auto',
+                        padding: '0.2em',
+                        color: '#777',
+                        textDecoration:'underline'}}
+                    onClick={()=>{setMostrandoForm(!mostrandoForm)}}
+                    className="btn-anadir-subtareas"
+                >Añadir subtarea</button>
+            }
         </>
     )
 }
