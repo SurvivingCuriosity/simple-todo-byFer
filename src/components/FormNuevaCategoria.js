@@ -55,6 +55,7 @@ export function FormNuevaCategoria(props){
                 <form onSubmit={handleSubmit}>
                     <div className="input-and-button">
                         <input
+                            className='input-text-crear-cat'
                             onChange={handleChange}
                             value={tituloCategoria}
                             type='text'
@@ -62,7 +63,7 @@ export function FormNuevaCategoria(props){
                         ></input>
                         <input
                             onClick={handleSubmit}
-                            className='input-crear-cat'
+                            className='input-submit-crear-cat'
                             type='image' 
                             src={tituloCategoria==="" ? icono_anadir_disabled : icono_anadir_enabled} 
                             disabled={tituloCategoria==="" ? true : false}

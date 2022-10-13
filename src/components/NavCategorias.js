@@ -36,7 +36,7 @@ export function NavCategorias (props) {
                     handleCloseCallback={userClosesForm}
                     handleBorrarCategoria={userBorraCategoria}
                 />}
-            <img src={icono_anadir_enabled} onClick={muestraFormNuevaCategoria}></img>
+            <img className='btn-crear-categoria' src={icono_anadir_enabled} onClick={muestraFormNuevaCategoria}></img>
             <div className='nav-categorias'>
                 <div className={`tab-header-categoria animate-color-change ${(props.categoriaActiva===categoriasDefault[0])? `categoria-activa` : ``}`} onClick={userClicksCategoria}>Sin categoría</div>
                 {props.categorias.map((cat)=>{
