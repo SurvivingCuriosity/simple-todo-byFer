@@ -31,7 +31,7 @@ export function BotonClaroOscuro(props){
 
 
     return(
-        <div className={`boton-claro-oscuro ${clase}`} style={{backgroundColor: colorFondo}}>
+        <div className={`boton-claro-oscuro ${clase}`} style={{backgroundColor: '#777'}}>
             <img onClick={activarModoOscuro} src={icono_luna}></img>
             <img onClick={activarModoClaro} src={icono_sol}></img>
         </div>

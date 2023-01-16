@@ -42,7 +42,7 @@ export function FormularioSubtareas(props){
             ?
                 formSubTarea
             :
-                <button
+                <div
                     style={{border: 'none',
                         marginRight: 'auto',
                         padding: '0.2em',
@@ -50,7 +50,7 @@ export function FormularioSubtareas(props){
                         textDecoration:'underline'}}
                     onClick={()=>{setMostrandoForm(!mostrandoForm)}}
                     className="btn-anadir-subtareas"
-                >Añadir subtarea</button>
+                >Añadir subtarea</div>
             }
         </>
     )

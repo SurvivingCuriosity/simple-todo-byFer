@@ -2,6 +2,7 @@
 :root{
     /*COLORES*/
     --negroTrans: rgba(0, 0, 0, 0.95);
+    --blancoTrans: rgba(240, 240, 240, 0.95);
     --negro: #111;
     --negro2: #222;
     --negro3: #333;
@@ -10,14 +11,18 @@
     --blanco3:#AAA;
     --colorSobreNegro: rgb(228, 237, 58);
     --colorSobreBlanco: rgb(27, 38, 163);
+
+    --error: rgb(200,50,50);
 }
 html[data-theme="dark"]{
     --fondo: var(--negro);
+    --fondoTrans: var(--negroTrans);
     --fondo2: var(--negro2);
     --fondo3: var(--negro3);
     --colorTexto: var(--blanco);
 }
 html[data-theme="light"]{
+    --fondoTrans: var(--blancoTrans);
     --fondo: var(--blanco);
     --fondo2: var(--blanco2);
     --fondo3: var(--blanco3);
@@ -31,8 +36,6 @@ body{
 }
 /*ELEMENTOS SUELTOS*/
 h1{font-size: 3em;}
-h2{}
-h3{}
 a{text-decoration: none;}
 a:hover,button:hover{cursor: pointer;}
 input[type='text']{
@@ -86,7 +89,8 @@ a {
 .caja{
     padding: 0.75em;
     margin: 0.5em;
-    background-color: var(--fondo2);
+    background-color: var(--fondo3);
+    border-radius: 10px;
 }
 .input-and-button{
     display: flex;
@@ -116,25 +120,56 @@ a {
     background-color: #F84F31;
 }
 /*FIN CLASES APOYO*/
-
+.boton-eliminar-completadas{
+    border: none;
+    margin: 1em;
+    background-color: transparent;
+    color: var(--error);
+}
+.empty-tareas-message{
+    text-align: center;
+    margin: 1em;
+    font-size: 0.85em;
+}
+.btn-abrir-ajustes{
+    position: absolute;
+    top: 1em;
+    left: 0;
+    background-color: var(--fondo3);
+    border: none;
+    width: 3em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0em 1.5em;
+    border-bottom-right-radius: 15px;
+    border-top-right-radius: 15px;
+}
+.btn-abrir-ajustes img{
+    width: 2.25em;
+    aspect-ratio: 1;
+    margin: 0.5em;
+}
 /*TAREA */
 .lista-tareas{
     display: flex;
     background-color: var(--fondo3);
     flex-flow: column-reverse nowrap;
-    padding:1.2em 0.5em;
-    width: 100vw;
+    padding: 0.5em;
+    width: 95vw;
+    border-radius: 10px;
 }
 .tarea-container{
     min-width: 90vw;
+    height: 3.5em;
     display: flex;
     align-items: stretch;
     background-color: var(--fondo);
     padding: 0.5em;
-    margin: 0.25em;
-    border-radius: 6px;
+    margin: 0.15em;
+    border-radius: 5px;
     position: relative;
-    justify-content: space-between;
+    justify-content: center;
     flex-direction: column;
 }
 .tarea-checkbox-container{
@@ -146,10 +181,12 @@ a {
 .iconos-tarea-container{
     display: flex;
     flex-flow: row-reverse;
+    margin-left: 0.5em;
+    gap: 0.50em;
 }
 .iconos-tarea-container img{
     aspect-ratio: 1;
-    width: 1.2em;
+    width: 1.5em;
     margin-bottom: 0.5em;
 }
 .tarea-container p::first-letter{
@@ -290,25 +327,56 @@ ul.preview-subtareas{
     padding: 0em 1em;
     gap: 0.5em;
 }
-.form-nueva-categoria{
+.pantalla-ajustes{
     position: absolute;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: var(--negroTrans);
-    color: var(--blanco2);
+    background-color: var(--fondoTrans);
+    color: var(--colorTexto);
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
     flex-direction: column;
+    gap: 0.5em;
     z-index: 5;
-    padding: 2em;
+    padding: 4em 1.5em;
 }
-.form-nueva-categoria ul,
-.form-nueva-categoria form{
+.pantalla-ajustes h2{
+    font-size: 2em;
+    font-weight: bolder;
+    text-decoration: underline;
+    margin: 0.5em;
+}
+.pantalla-ajustes h3{
+    font-size: 1.25em;
+    margin: 1em;
+    margin-left: 1em;
+}
+.pantalla-ajustes ul{
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 0.5em;
+}
+
+.pantalla-ajustes ul,
+.pantalla-ajustes form{
     padding-left: 2em;
     width: 100%;
+}
+.pantalla-ajustes li{
+    background-color: var(--fondo3);
+    padding: 0.5em;
+    border-radius: 10px;
+}
+.pantalla-ajustes .boton-nueva-categoria{
+    margin: 1em auto;
+    background-color: var(--fondo3);
+    color: var(--colorTexto);
+    border: 1px solid var(--colorTexto);
+    padding: 0.5em;
+    border-radius: 10px;
 }
 .texto-click-volver{
     margin-bottom: 4.75em;
