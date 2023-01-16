@@ -1,5 +1,9 @@
-*{box-sizing: border-box;font-family: 'Poppins', sans-serif;}
-:root{
+* {
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+:root {
     /*COLORES*/
     --negroTrans: rgba(0, 0, 0, 0.95);
     --blancoTrans: rgba(240, 240, 240, 0.95);
@@ -7,46 +11,65 @@
     --negro: #111;
     --negro2: #222;
     --negro3: #333;
-    --blanco:#EEE;
-    --blanco2:#CCC;
-    --blanco3:#AAA;
+    --blanco: #EEE;
+    --blanco2: #CCC;
+    --blanco3: #AAA;
     --colorSobreNegro: rgb(228, 237, 58);
     --colorSobreBlanco: rgb(27, 38, 163);
 
-    --error: rgb(200,50,50);
+    --error: rgb(200, 50, 50);
 }
-html[data-theme="dark"]{
+
+html[data-theme="dark"] {
     --fondo: var(--negro);
     --fondoTrans: var(--negroTrans);
     --fondo2: var(--negro2);
     --fondo3: var(--negro3);
     --colorTexto: var(--blanco);
 }
-html[data-theme="light"]{
+
+html[data-theme="light"] {
     --fondoTrans: var(--blancoTrans);
     --fondo: var(--blanco);
     --fondo2: var(--blanco2);
     --fondo3: var(--blanco3);
     --colorTexto: var(--negro);
 }
-html{font-family: 'Poppins', sans-serif;}
-body{
+
+html {
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
     font-family: 'Poppins', sans-serif;
     background-color: var(--fondo);
     color: var(--colorTexto);
-    scrollbar-width: none;  /* Firefox */
-    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* IE and Edge */
 }
+
 /* Hide scrollbar for Chrome, Safari and Opera */
 ::-webkit-scrollbar {
     display: none;
-  }
+}
 
 /*ELEMENTOS SUELTOS*/
-h1{font-size: 3em;}
-a{text-decoration: none;}
-a:hover,button:hover{cursor: pointer;}
-input[type='text']{
+h1 {
+    font-size: 3em;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover,
+button:hover {
+    cursor: pointer;
+}
+
+input[type='text'] {
     border: none;
     padding: 0.25em 0.5em;
     border-radius: 5px;
@@ -55,13 +78,16 @@ input[type='text']{
     background-color: var(--blanco2);
     color: var(--negro);
 }
-::placeholder{
+
+::placeholder {
     font-family: 'Poppins', sans-serif;
 }
-input[type='text']:focus{
+
+input[type='text']:focus {
     border: none;
     background-color: var(--blanco2);
 }
+
 /*Esto elimina el cuadro azul onClick en moviles*/
 input,
 textarea,
@@ -69,82 +95,106 @@ button,
 select,
 img,
 a {
-  -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
+
 /*FIN ELEMENTOS SUELTOS*/
 /*CLASES APOYO*/
-.pad-1{padding: 1em;}
-.pad-2{padding: 2em;}
-.pad-3{padding: 3em;}
-.full-screen-height{
+.pad-1 {
+    padding: 1em;
+}
+
+.pad-2 {
+    padding: 2em;
+}
+
+.pad-3 {
+    padding: 3em;
+}
+
+.full-screen-height {
     min-height: 100vh;
 }
-.totally-centered{
+
+.totally-centered {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-flow: column nowrap;
 }
-.horizontal-centered{
+
+.horizontal-centered {
     display: flex;
     align-items: center;
     flex-flow: column nowrap;
 }
-.vertical-centered{
+
+.vertical-centered {
     display: flex;
     justify-content: center;
     flex-flow: column nowrap;
 }
-.caja{
+
+.caja {
     padding: 0.75em;
     margin: 0.5em;
     background-color: var(--fondo3);
     border-radius: 10px;
 }
-.input-and-button{
+
+.input-and-button {
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
     gap: 0.5em;
     justify-content: space-between;
 }
-.okay-cancel-buttons{
+
+.okay-cancel-buttons {
     display: grid;
     grid-template-columns: 2fr 1fr;
     gap: 2em;
 }
-.boton:hover{
+
+.boton:hover {
     cursor: pointer;
 }
-.boton{
+
+.boton {
     border: none;
     border-radius: 5px;
     padding: 0.5em 1em;
     color: var(--blanco);
 }
-.boton:disabled{
+
+.boton:disabled {
     background-color: var(--fondo3);
     color: var(--blanco);
 }
-.btn-success{
+
+.btn-success {
     background-color: var(--gris);
 }
-.btn-cancel{
+
+.btn-cancel {
     background-color: var(--error);
 }
+
 /*FIN CLASES APOYO*/
-.boton-eliminar-completadas{
+.boton-eliminar-completadas {
     border: none;
     margin: 1em;
     background-color: transparent;
     color: var(--error);
 }
-.empty-tareas-message{
+
+.empty-tareas-message {
     text-align: center;
     margin: 1em;
     font-size: 0.85em;
 }
-.btn-abrir-ajustes{
+
+.btn-abrir-ajustes {
     position: absolute;
     top: 1em;
     left: 0;
@@ -158,24 +208,27 @@ a {
     border-bottom-right-radius: 15px;
     border-top-right-radius: 15px;
 }
-.btn-abrir-ajustes img{
+
+.btn-abrir-ajustes img {
     width: 2.25em;
     aspect-ratio: 1;
     margin: 0.5em;
 }
+
 /*TAREA */
-.lista-tareas{
+.lista-tareas {
     display: flex;
     background-color: var(--fondo3);
     flex-flow: column-reverse nowrap;
     padding: 0.5em;
-    width: 95vw;
+    width: 100%;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
     border-bottom-left-radius: 10px;
 }
-.tarea-container{
-    min-width: 90vw;
+
+.tarea-container {
+    min-width: 90%;
     min-height: 3.5em;
     display: flex;
     align-items: stretch;
@@ -187,27 +240,32 @@ a {
     justify-content: center;
     flex-direction: column;
 }
-.tarea-checkbox-container{
+
+.tarea-checkbox-container {
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
     width: 100%;
 }
-.iconos-tarea-container{
+
+.iconos-tarea-container {
     display: flex;
     flex-flow: row-reverse;
     margin-left: 0.5em;
     gap: 0.50em;
 }
-.iconos-tarea-container img{
+
+.iconos-tarea-container img {
     aspect-ratio: 1;
     width: 1.5em;
     margin-bottom: 0.5em;
 }
-.tarea-container p::first-letter{
+
+.tarea-container p::first-letter {
     font-size: 1.33em;
 }
-.tarea-container .fecha-tarea{
+
+.tarea-container .fecha-tarea {
     position: absolute;
     font-size: 0.5em;
     margin: 0.1em;
@@ -215,64 +273,76 @@ a {
     bottom: 0.2em;
     right: 1em;
 }
-.tarea-container input:checked + label,
-.subtarea-li-container input:checked + label{
+
+.tarea-container input:checked+label,
+.subtarea-li-container input:checked+label {
     text-decoration: line-through;
 }
-.tarea-container label+span{
+
+.tarea-container label+span {
     margin-left: 0.5em;
     font-size: 0.7em;
     opacity: 0.3;
 }
-.tarea-container input[type='checkbox']{
+
+.tarea-container input[type='checkbox'] {
     transform: scale(1.33);
 }
-.tarea-container .subtarea-li-container input[type='checkbox']{
+
+.tarea-container .subtarea-li-container input[type='checkbox'] {
     transform: scale(1);
 }
-.btn-borrar-tareas{
-    border:none;
+
+.btn-borrar-tareas {
+    border: none;
     background-color: transparent;
     margin: 1em 1em 1em auto;
     color: red;
     text-decoration: underline;
 }
+
 /*FORMULARIO NUEVA TAREA*/
-.form-nueva-tarea{
+.form-nueva-tarea {
     font-size: 0.85em;
     margin-bottom: 2em;
+    width: 100%;
 }
 
-.btn-anadir-subtareas{
+.btn-anadir-subtareas {
     border: none;
     border-radius: 5px;
     background-color: transparent;
     color: var(--textoColor);
-    border:1px solid var(--colorTexto);
-    padding:0.5em 1em;
+    border: 1px solid var(--colorTexto);
+    padding: 0.5em 1em;
 }
+
 .icono-expandir-subtareas,
-.icono-borrar-tarea{
+.icono-borrar-tarea {
     margin-left: auto;
 }
+
 .icono-expandir-subtareas:hover,
-.icono-borrar-tarea:hover{
+.icono-borrar-tarea:hover {
     cursor: pointer;
 }
-ul.preview-subtareas{
+
+ul.preview-subtareas {
     padding: 0em 1em;
     list-style-type: disc;
     list-style-position: inside;
 }
-.lista-subtareas{
+
+.lista-subtareas {
     display: flex;
     flex-flow: column nowrap;
     gap: 0.2em;
     margin-left: 1.25em;
     padding: 0.25em;
-    width: 95%;
+    width: 100%;
 }
-.subtarea-li-container{
+
+.subtarea-li-container {
     background-color: var(--fondo2);
     padding: 0.33em;
     border-radius: 5px;
@@ -283,14 +353,17 @@ ul.preview-subtareas{
     gap: 0.3em;
     min-height: 2.2em;
 }
-.subtarea-li-container img{
+
+.subtarea-li-container img {
     width: 1.25em;
 }
-.lista-subtareas .input-and-button{
+
+.lista-subtareas .input-and-button {
     margin: 0.5em 0em;
 }
+
 /*FIN FORMULARIO NUEVA TAREA*/
-.boton-claro-oscuro{
+.boton-claro-oscuro {
     width: 80px;
     padding: 0.5em;
     border-radius: 40px;
@@ -301,30 +374,36 @@ ul.preview-subtareas{
     left: -40px;
     justify-content: space-between;
 }
-.gira180{
+
+.gira180 {
     transform: rotate(180deg);
     transition: transform 0.2s ease-in-out;
 }
-.gira-180{
+
+.gira-180 {
     transform: rotate(0deg);
     transition: transform 0.2s ease-in-out;
 }
-.boton-claro-oscuro:hover{
+
+.boton-claro-oscuro:hover {
     cursor: pointer;
 }
-.boton-claro-oscuro img{
+
+.boton-claro-oscuro img {
     width: 1.5em;
-    transform: rotate(180deg);/*para que la luna se vea bien*/
+    transform: rotate(180deg);
+    /*para que la luna se vea bien*/
 }
 
-.nav-categorias{
+.nav-categorias {
     display: flex;
     flex-flow: row nowrap;
     gap: 0.5em;
     justify-content: flex-start;
     overflow-y: scroll;
 }
-.nav-categorias .tab-header-categoria{
+
+.nav-categorias .tab-header-categoria {
     border-top-left-radius: 9px;
     border-top-right-radius: 9px;
     border-bottom-right-radius: 0px;
@@ -332,24 +411,28 @@ ul.preview-subtareas{
     padding: 0.6em 0.7em;
     font-size: 0.9em;
 }
-.nav-categorias .tab-header-categoria:hover{
-    cursor:pointer;
+
+.nav-categorias .tab-header-categoria:hover {
+    cursor: pointer;
 }
-.categoria-activa{
+
+.categoria-activa {
     background-color: var(--fondo3);
 }
-.nav-categorias-y-boton{
+
+.nav-categorias-y-boton {
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
-    width: 95vw;
+    width: 100%;
     gap: 0.5em;
 }
-.pantalla-ajustes{
+
+.pantalla-ajustes {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100vw;
+    width: 100%;
     height: 100vh;
     background-color: var(--fondoTrans);
     color: var(--colorTexto);
@@ -361,34 +444,39 @@ ul.preview-subtareas{
     z-index: 5;
     padding: 4em 1.5em;
 }
-.pantalla-ajustes h2{
+
+.pantalla-ajustes h2 {
     font-size: 2em;
     font-weight: bolder;
     text-decoration: underline;
     margin: 0.5em;
 }
-.pantalla-ajustes h3{
+
+.pantalla-ajustes h3 {
     font-size: 1.25em;
     margin: 1em;
     margin-left: 1em;
 }
-.pantalla-ajustes ul{
+
+.pantalla-ajustes ul {
     display: flex;
     flex-flow: column nowrap;
     gap: 0.5em;
 }
 
 .pantalla-ajustes ul,
-.pantalla-ajustes form{
+.pantalla-ajustes form {
     padding-left: 2em;
     width: 100%;
 }
-.pantalla-ajustes li{
+
+.pantalla-ajustes li {
     background-color: var(--fondo3);
     padding: 0.5em;
     border-radius: 10px;
 }
-.pantalla-ajustes .boton-nueva-categoria{
+
+.pantalla-ajustes .boton-nueva-categoria {
     margin: 1em auto;
     background-color: var(--fondo3);
     color: var(--colorTexto);
@@ -396,7 +484,8 @@ ul.preview-subtareas{
     padding: 0.5em;
     border-radius: 10px;
 }
-.texto-click-volver{
+
+.texto-click-volver {
     margin-bottom: 4.75em;
     font-size: 0.7em;
     position: absolute;
@@ -404,4 +493,65 @@ ul.preview-subtareas{
     text-align: center;
     left: 50%;
     transform: translate(-50%, 0);
+}
+
+/* 
+  ##Device = Desktops
+  ##Screen = 1281px to higher resolution desktops
+*/
+@media (min-width: 1921px) {
+    .god-container{
+        width: 30%;
+        margin: auto;
+    }
+}
+
+@media (min-width: 1281px) and (max-width: 1920px){
+    .god-container{
+        width: 40%;
+        margin: auto;
+    }
+}
+
+
+
+/* 
+    ##Device = Laptops, Desktops
+    ##Screen = B/w 1025px to 1280px
+  */
+@media (min-width: 1025px) and (max-width: 1280px) {
+    /* CSS */
+    .god-container{
+        width: 50%;
+        margin: auto;
+    }
+}
+
+/* 
+    ##Device = Tablets, Ipads (portrait)
+    ##Screen = B/w 768px to 1024px
+  */
+@media (min-width: 768px) and (max-width: 1024px) {
+    /* CSS */
+    .god-container{
+        width: 70%;
+        margin: auto;
+    }
+}
+
+/* 
+    ##Device = Tablets, Ipads (landscape)
+    ##Screen = B/w 768px to 1024px
+  */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    /* CSS */
+}
+/* 
+    ##Device = Low Resolution Tablets, Mobiles (Landscape)
+    ##Screen = B/w 481px to 767px
+  */
+@media (min-width: 481px) and (max-width: 767px) {
+
+    /* CSS */
+
 }

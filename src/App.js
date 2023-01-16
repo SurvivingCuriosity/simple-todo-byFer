@@ -226,7 +226,7 @@ function App() {
 	}
 	return (
 
-		<div className="horizontal-centered full-screen-height pad-2">
+		<div className="god-container horizontal-centered full-screen-height pad-1">
 
 			{mostrandoAjustes &&
                 <PantallaAjustes

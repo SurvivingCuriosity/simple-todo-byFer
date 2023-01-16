@@ -115,7 +115,7 @@ export function FormularioNuevaTarea(props){
     }
     
     return(
-        <div className={`caja form-nueva-tarea`} style={{width:'95vw'}}>
+        <div className={`caja form-nueva-tarea`}>
                 <form style={{display:'flex', flexFlow:'column',gap:'1em'}} onSubmit={handleSubmit}>
                     
                     <div className="input-and-button">
