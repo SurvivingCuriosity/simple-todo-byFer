@@ -255,35 +255,39 @@ function App() {
 				callback={userCreatesTarea}
 			/>
 
-			<NavCategorias
-				categorias={categorias}
-				categoriaActiva={categoriaActiva}
-				callbackCrearCategoria={userCreatesCategoria}
-				callbackBorrarCategoria={userBorraCategoria}
-				callbackCategoriaActiva={cambiarCategoriaActiva}
-			/>
+		{tareas.length > 0 && 
+		<>
+				<NavCategorias
+					categorias={categorias}
+					categoriaActiva={categoriaActiva}
+					callbackCrearCategoria={userCreatesCategoria}
+					callbackBorrarCategoria={userBorraCategoria}
+					callbackCategoriaActiva={cambiarCategoriaActiva}
+				/>
 
-			<ul className='lista-tareas'>
-				{
-					(tareasCategoria.length <= 0)
-						? <p className='empty-tareas-message'>No hay tareas pendientes...</p>
-						: tareasCategoria.map(tarea => {
-							return (
-								<Tarea
-									key={tarea.id}
-									id={tarea.id}
-									tarea={tarea}
-									callbackCheck={checkTarea}
-									callbackSubtareaCheck={checkSubTarea}
-									callbackBorrarTarea={eliminarTareaConId}
-									callbackEliminarSubTarea={eliminarSubTarea}
-									callbackNuevaSubtarea={nuevaSubtarea}
-									callbackGuardarTarea={editarTarea}
-								/>
-							)
-						})
-				}
-			</ul>
+				<ul className='lista-tareas'>
+					{
+						(tareasCategoria.length <= 0)
+							? <p className='empty-tareas-message'>No hay tareas pendientes...</p>
+							: tareasCategoria.map(tarea => {
+								return (
+									<Tarea
+										key={tarea.id}
+										id={tarea.id}
+										tarea={tarea}
+										callbackCheck={checkTarea}
+										callbackSubtareaCheck={checkSubTarea}
+										callbackBorrarTarea={eliminarTareaConId}
+										callbackEliminarSubTarea={eliminarSubTarea}
+										callbackNuevaSubtarea={nuevaSubtarea}
+										callbackGuardarTarea={editarTarea}
+									/>
+								)
+							})
+					}
+				</ul>
+		</>
+		}
 
 			{hayTareasCompletadas() &&
 				<button className='boton-eliminar-completadas' onClick={eliminarTareasCompletadas}>Eliminar tareas completadas</button>

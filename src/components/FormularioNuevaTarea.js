@@ -15,13 +15,6 @@ export function FormularioNuevaTarea(props){
     const handleChange = evt => {
         setTituloTarea(evt.target.value)
     }
-    React.useEffect(()=>{
-        if(tituloTarea!==''){
-            setClase('height-2')
-            let clientHeight = document.getElementById('animate-heigth').clientHeight;
-            console.log(clientHeight); 
-        }
-    },[tituloTarea])
 
     React.useEffect(()=>{
         if(props.categoriaActiva===''){
@@ -122,7 +115,7 @@ export function FormularioNuevaTarea(props){
     }
     
     return(
-        <div id='animate-heigth' className={`caja animate-height ${tituloTarea==="" ? 'height-1' : 'height-2'}`} style={{width:'95vw'}}>
+        <div className={`caja form-nueva-tarea`} style={{width:'95vw'}}>
                 <form style={{display:'flex', flexFlow:'column',gap:'1em'}} onSubmit={handleSubmit}>
                     
                     <div className="input-and-button">
@@ -140,7 +133,7 @@ export function FormularioNuevaTarea(props){
                     
 
                     {tituloTarea!=='' && 
-                        <div className="delay-fade-in" style={{opacity:'0',display:'flex', flexFlow:'column',gap:'1em'}}>
+                        <div style={{display:'flex', flexFlow:'column',gap:'1em'}}>
                             <div style={{alignItems: 'flex-start'}} className="input-and-button">
                                 <label style={{marginTop: '0.45em'}}>Categoría: </label>
                                 <Select 
@@ -173,7 +166,7 @@ export function FormularioNuevaTarea(props){
                                     tareas={subTareas}
                                 />
                             }
-                            <div className="input-and-button">
+                            <div className="okay-cancel-buttons">
                                 <input type='submit' disabled={tituloTarea==="" ? true : false} className="boton btn-success" value='Añadir tarea'></input>
                                 <button className="boton btn-cancel" onClick={limpiaCampos}>Cancelar</button>
                             </div>

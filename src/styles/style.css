@@ -3,6 +3,7 @@
     /*COLORES*/
     --negroTrans: rgba(0, 0, 0, 0.95);
     --blancoTrans: rgba(240, 240, 240, 0.95);
+    --gris: #777;
     --negro: #111;
     --negro2: #222;
     --negro3: #333;
@@ -33,7 +34,14 @@ body{
     font-family: 'Poppins', sans-serif;
     background-color: var(--fondo);
     color: var(--colorTexto);
+    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;  /* IE and Edge */
 }
+/* Hide scrollbar for Chrome, Safari and Opera */
+::-webkit-scrollbar {
+    display: none;
+  }
+
 /*ELEMENTOS SUELTOS*/
 h1{font-size: 3em;}
 a{text-decoration: none;}
@@ -45,6 +53,7 @@ input[type='text']{
     width: 100%;
     height: 2.5em;
     background-color: var(--blanco2);
+    color: var(--negro);
 }
 ::placeholder{
     font-family: 'Poppins', sans-serif;
@@ -99,6 +108,11 @@ a {
     gap: 0.5em;
     justify-content: space-between;
 }
+.okay-cancel-buttons{
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2em;
+}
 .boton:hover{
     cursor: pointer;
 }
@@ -107,17 +121,16 @@ a {
     border-radius: 5px;
     padding: 0.5em 1em;
     color: var(--blanco);
-    margin-top:2em;
 }
 .boton:disabled{
     background-color: var(--fondo3);
     color: var(--blanco);
 }
 .btn-success{
-    background-color: #23C552;
+    background-color: var(--gris);
 }
 .btn-cancel{
-    background-color: #F84F31;
+    background-color: var(--error);
 }
 /*FIN CLASES APOYO*/
 .boton-eliminar-completadas{
@@ -157,7 +170,9 @@ a {
     flex-flow: column-reverse nowrap;
     padding: 0.5em;
     width: 95vw;
-    border-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
 }
 .tarea-container{
     min-width: 90vw;
@@ -223,6 +238,11 @@ a {
     text-decoration: underline;
 }
 /*FORMULARIO NUEVA TAREA*/
+.form-nueva-tarea{
+    font-size: 0.85em;
+    margin-bottom: 2em;
+}
+
 .btn-anadir-subtareas{
     border: none;
     border-radius: 5px;
@@ -298,7 +318,6 @@ ul.preview-subtareas{
 }
 
 .nav-categorias{
-    width: 100vw;
     display: flex;
     flex-flow: row nowrap;
     gap: 0.5em;
@@ -323,8 +342,7 @@ ul.preview-subtareas{
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
-    width: 100vw;
-    padding: 0em 1em;
+    width: 95vw;
     gap: 0.5em;
 }
 .pantalla-ajustes{
