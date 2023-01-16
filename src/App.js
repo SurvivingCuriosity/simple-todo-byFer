@@ -45,13 +45,16 @@ function App() {
 
 	//FUNCIONES DE CATEGORIAS
 	const userCreatesCategoria = (titulo) => {
-		setCategorias(prev => {
-			return [
-				...prev,
-				titulo
-			]
-		})
-		setCategoriaActiva(titulo)
+		if(categorias.some(cat => cat === titulo)) return;
+		else{
+			setCategorias(prev => {
+				return [
+					...prev,
+					titulo
+				]
+			})
+			setCategoriaActiva(titulo)
+		}
 	}
 
 	const userBorraCategoria = (titulo) => {

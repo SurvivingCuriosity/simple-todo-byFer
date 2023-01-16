@@ -22,11 +22,12 @@ export function PantallaAjustes(props) {
     const handleChange = (evt) => {
         setTituloCategoria(evt.target.value)
     }
+    
     const handleSubmit = (evt) => {
-        setMostrandoFormNuevaCategoria(false);
         evt.preventDefault();
         callbackNuevaCategoria(tituloCategoria);
         setTituloCategoria('');
+        setMostrandoFormNuevaCategoria(false);
     }
     const borrarCategoria = (evt) => {
         handleBorrarCategoria(evt.target.name);
