@@ -161,7 +161,7 @@ a {
 }
 .tarea-container{
     min-width: 90vw;
-    height: 3.5em;
+    min-height: 3.5em;
     display: flex;
     align-items: stretch;
     background-color: var(--fondo);
