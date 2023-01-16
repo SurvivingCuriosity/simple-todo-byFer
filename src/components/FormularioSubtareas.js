@@ -16,8 +16,7 @@ export function FormularioSubtareas(props){
     }
 
     const formSubTarea=(
-
-            <div className="input-and-button">
+            <form className="input-and-button">
                 <input
                     onChange={handleChange}
                     value={textSubtarea}
@@ -33,7 +32,7 @@ export function FormularioSubtareas(props){
                     alt='icono nueva tarea' 
                     style={{width:'2em'}}>
                 </input>
-            </div>
+            </form>
     )
     return(
         <>
