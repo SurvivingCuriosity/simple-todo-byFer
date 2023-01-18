@@ -78,6 +78,9 @@ input[type='text'] {
     background-color: var(--blanco2);
     color: var(--negro);
 }
+input{
+    accent-color: var(--blanco3);
+}
 
 ::placeholder {
     font-family: 'Poppins', sans-serif;
@@ -205,7 +208,7 @@ a {
     position: absolute;
     top: 1em;
     left: 0;
-    background-color: var(--fondo3);
+    background-color: transparent;
     border: none;
     width: 3em;
     display: flex;
@@ -370,17 +373,37 @@ ul.preview-subtareas {
 
 /*FIN FORMULARIO NUEVA TAREA*/
 .boton-claro-oscuro {
-    width: 80px;
     padding: 0.5em;
-    border-radius: 40px;
     display: flex;
     flex-flow: row nowrap;
-    position: absolute;
-    top: 1.5em;
-    left: -40px;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 2em;
+    margin: auto;
+    width: 100%;
 }
 
+.boton-claro-oscuro span{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+    align-items: center;
+    gap: 0.5em;
+    width: 125px;
+    background-color: var(--fondo3);
+    padding: 0.5em;
+    border-radius: 40px;
+}
+.icono_sol,
+.icono_luna{
+    padding: 0.3em;
+    border-radius: 50%;
+}
+.icono_sol{
+    background-color: var(--blanco2);
+}
+.icono_luna{
+    background-color: var(--negro2);
+}
 .gira180 {
     transform: rotate(180deg);
     transition: transform 0.2s ease-in-out;
@@ -391,14 +414,12 @@ ul.preview-subtareas {
     transition: transform 0.2s ease-in-out;
 }
 
-.boton-claro-oscuro:hover {
+.boton-claro-oscuro span:hover {
     cursor: pointer;
 }
 
 .boton-claro-oscuro img {
-    width: 1.5em;
-    transform: rotate(180deg);
-    /*para que la luna se vea bien*/
+    width: 2em;
 }
 
 .nav-categorias {
@@ -448,14 +469,14 @@ ul.preview-subtareas {
     flex-direction: column;
     gap: 0.5em;
     z-index: 5;
-    padding: 4em 1.5em;
+    padding: 1em;
 }
 
 .pantalla-ajustes h2 {
     font-size: 2em;
     font-weight: bolder;
     text-decoration: underline;
-    margin: 0.5em;
+    margin: 0 0.5em;
 }
 
 .pantalla-ajustes h3 {

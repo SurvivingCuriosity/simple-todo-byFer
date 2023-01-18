@@ -6,15 +6,14 @@ import './styles/animations.css';
 import { FormularioNuevaTarea } from './components/FormularioNuevaTarea';
 import { Tarea } from './components/Tarea';
 import { NavCategorias } from './components/NavCategorias';
-import { BotonClaroOscuro } from './components/BotonClaroOscuro';
 import { obtenFecha } from './helpers/fechas';
-import { categoriasDefault } from './data/categoriasDefault';
-import  icono_ajustes  from './imgs/icono_ajustes.svg';
+import icono_ajustes from './imgs/icono_ajustes.svg';
 import { PantallaAjustes } from './components/PantallaAjustes';
 
 function App() {
 	const [tareasLS, setTareasLS] = useLocalStorage("tareas", []);
 	const [tareas, setTareas] = React.useState(tareasLS);
+
 	const [mostrandoAjustes, setMostrandoAjustes] = React.useState(false);
 
 	const [categoriasLS, setCategoriasLS] = useLocalStorage("categorias", []);
@@ -26,14 +25,12 @@ function App() {
 	const [categoriaActivaLS, setCategoriaActivaLS] = useLocalStorage("categoriaActiva", '');
 	const [categoriaActiva, setCategoriaActiva] = React.useState(categoriaActivaLS || '');
 
-	const [editandoTarea, setEditandoTarea] = React.useState(false);
-
 	const [tema, setTema] = useLocalStorage("tema", 'dark');
 
 	//Establece el tema por defecto
 	React.useEffect(() => { document.documentElement.setAttribute('data-theme', tema); }, [])
 
-	//Cuando cambian las categorias, las anado al localstorage
+	//Cuando cambian las tareas o categorias, las anado al localstorage
 	React.useEffect(() => { setCategoriasLS(categorias); }, [categorias])
 	React.useEffect(() => { setTareasLS(tareas); }, [tareas])
 
@@ -45,8 +42,9 @@ function App() {
 
 	//FUNCIONES DE CATEGORIAS
 	const userCreatesCategoria = (titulo) => {
-		if(categorias.some(cat => cat === titulo)) return;
-		else{
+		//si ya existe una categoria con ese nombre no hace nada
+		if (categorias.some(cat => cat === titulo)) return;
+		else {
 			setCategorias(prev => {
 				return [
 					...prev,
@@ -61,7 +59,7 @@ function App() {
 		borrarNotasDeCategoria(titulo);
 		let nuevasCategorias = categorias.filter(cat => cat !== titulo)
 		setCategorias(nuevasCategorias);
-		setCategoriaActiva(categoriasDefault[0])
+		setCategoriaActiva('')
 	}
 
 	const borrarNotasDeCategoria = (tituloCategoria) => {
@@ -80,8 +78,9 @@ function App() {
 			setCategoriaActiva(titulo);
 		}
 	}
+
 	//FUNCIONES DE TAREAS
-	const userCreatesTarea = (tituloTarea, subtareas, categoria) => {
+	const crearTarea = (tituloTarea, subtareas, categoria) => {
 		setTareas(prev => {
 			return [
 				...prev,
@@ -90,7 +89,7 @@ function App() {
 					fecha: obtenFecha(Date.now()),
 					titulo: tituloTarea,
 					checked: false,
-					subtareas: subtareas || '',
+					subtareas: subtareas || [],
 					categoria: categoria
 				}
 			]
@@ -103,13 +102,6 @@ function App() {
 				return element.id !== idTarea;
 			}),
 		);
-	}
-
-	const obtenerTareasCategoria = (tituloCategoria) => {
-		const nuevasTareas = tareas.filter(tarea => {
-			return tarea.categoria === tituloCategoria;
-		})
-		return nuevasTareas;
 	}
 
 	const checkTarea = (isChecked, idTarea) => {
@@ -139,6 +131,7 @@ function App() {
 			}),
 		);
 	}
+
 	//FUNCIONES DE SUBTAREAS
 	const checkSubTarea = (isChecked, idTarea, idTareaPadre) => {
 		let substate;
@@ -221,32 +214,29 @@ function App() {
 		}
 	}
 
-	const abrirAjustes = () => {
-		setMostrandoAjustes(true);
-	}
 	const hayTareasCompletadas = () => {
 		return tareas.some(tarea => tarea.checked === true);
 	}
+
 	return (
 
 		<div className="god-container horizontal-centered full-screen-height pad-1">
 
 			{mostrandoAjustes &&
-                <PantallaAjustes
+				<PantallaAjustes
 					tema={tema}
 					activarTema={activarTema}
-                    categorias={categorias}
+					categorias={categorias}
 					callbackNuevaCategoria={userCreatesCategoria}
-                    handleCloseCallback={()=>{setMostrandoAjustes(false)}}
-                    handleBorrarCategoria={userBorraCategoria}
-                />}
+					handleCloseCallback={() => { setMostrandoAjustes(false) }}
+					handleBorrarCategoria={userBorraCategoria}
+				/>}
 
-			<button className='btn-abrir-ajustes' onClick={abrirAjustes}>
-				<img src={icono_ajustes}>
-				</img>
+			<button className='btn-abrir-ajustes' onClick={()=>{setMostrandoAjustes(true)}}>
+				<img src={icono_ajustes}></img>
 			</button>
 
-			
+
 
 			<h1>Tareas</h1>
 
@@ -255,42 +245,42 @@ function App() {
 			<FormularioNuevaTarea
 				categoriaActiva={categoriaActiva}
 				categorias={categorias}
-				callback={userCreatesTarea}
+				callback={crearTarea}
 			/>
 
-		{tareas.length > 0 && 
-		<>
-				<NavCategorias
-					categorias={categorias}
-					categoriaActiva={categoriaActiva}
-					callbackCrearCategoria={userCreatesCategoria}
-					callbackBorrarCategoria={userBorraCategoria}
-					callbackCategoriaActiva={cambiarCategoriaActiva}
-				/>
+			{tareas.length > 0 &&
+				<>
+					<NavCategorias
+						categorias={categorias}
+						categoriaActiva={categoriaActiva}
+						callbackCrearCategoria={userCreatesCategoria}
+						callbackBorrarCategoria={userBorraCategoria}
+						callbackCategoriaActiva={cambiarCategoriaActiva}
+					/>
 
-				<ul className='lista-tareas'>
-					{
-						(tareasCategoria.length <= 0)
-							? <p className='empty-tareas-message'>No hay tareas pendientes...</p>
-							: tareasCategoria.map(tarea => {
-								return (
-									<Tarea
-										key={tarea.id}
-										id={tarea.id}
-										tarea={tarea}
-										callbackCheck={checkTarea}
-										callbackSubtareaCheck={checkSubTarea}
-										callbackBorrarTarea={eliminarTareaConId}
-										callbackEliminarSubTarea={eliminarSubTarea}
-										callbackNuevaSubtarea={nuevaSubtarea}
-										callbackGuardarTarea={editarTarea}
-									/>
-								)
-							})
-					}
-				</ul>
-		</>
-		}
+					<ul className='lista-tareas'>
+						{
+							(tareasCategoria.length <= 0)
+								? <p className='empty-tareas-message'>No hay tareas pendientes...</p>
+								: tareasCategoria.map(tarea => {
+									return (
+										<Tarea
+											key={tarea.id}
+											id={tarea.id}
+											tarea={tarea}
+											callbackCheck={checkTarea}
+											callbackSubtareaCheck={checkSubTarea}
+											callbackBorrarTarea={eliminarTareaConId}
+											callbackEliminarSubTarea={eliminarSubTarea}
+											callbackNuevaSubtarea={nuevaSubtarea}
+											callbackGuardarTarea={editarTarea}
+										/>
+									)
+								})
+						}
+					</ul>
+				</>
+			}
 
 			{hayTareasCompletadas() &&
 				<button className='boton-eliminar-completadas' onClick={eliminarTareasCompletadas}>Eliminar tareas completadas</button>

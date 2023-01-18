@@ -22,7 +22,7 @@ export function PantallaAjustes(props) {
     const handleChange = (evt) => {
         setTituloCategoria(evt.target.value)
     }
-    
+
     const handleSubmit = (evt) => {
         evt.preventDefault();
         callbackNuevaCategoria(tituloCategoria);
@@ -35,10 +35,6 @@ export function PantallaAjustes(props) {
     return (
         <div className='pantalla-ajustes fade-in'>
             <div className='container-pantalla-ajustes'>
-                <BotonClaroOscuro
-                    temaActivo={tema}
-                    callback={activarTema}
-                />
 
                 <h2>CATEGORÍAS</h2>
                 <ul>
@@ -61,36 +57,38 @@ export function PantallaAjustes(props) {
                     }
                 </ul>
 
-
-                {
-                    mostrandoFormNuevaCategoria === true
-                        ?
-                        <>
-                            <form onSubmit={handleSubmit}>
-                                <div className="input-and-button">
-                                    <input
-                                        className='input-text-crear-cat'
-                                        onChange={handleChange}
-                                        value={tituloCategoria}
-                                        type='text'
-                                        placeholder='Titulo de la categoría'
-                                    ></input>
-                                    <input
-                                        onClick={handleSubmit}
-                                        className='input-submit-crear-cat'
-                                        type='image'
-                                        src={tituloCategoria === "" ? icono_anadir_disabled : icono_anadir_enabled}
-                                        disabled={tituloCategoria === "" ? true : false}
-                                        alt='icono nueva categoría'
-                                        style={{ width: '2em' }}>
-                                    </input>
-                                </div>
-                            </form>
-                        </>
-                        :
-                        <button className='boton-nueva-categoria' onClick={() => { setMostrandoFormNuevaCategoria(true) }}>Crear nueva categoría</button>
+                {mostrandoFormNuevaCategoria === true
+                    ?
+                    <>
+                        <form onSubmit={handleSubmit}>
+                            <div className="input-and-button">
+                                <input
+                                    className='input-text-crear-cat'
+                                    onChange={handleChange}
+                                    value={tituloCategoria}
+                                    type='text'
+                                    placeholder='Titulo de la categoría'
+                                ></input>
+                                <input
+                                    onClick={handleSubmit}
+                                    className='input-submit-crear-cat'
+                                    type='image'
+                                    src={tituloCategoria === "" ? icono_anadir_disabled : icono_anadir_enabled}
+                                    disabled={tituloCategoria === "" ? true : false}
+                                    alt='icono nueva categoría'
+                                    style={{ width: '2em' }}>
+                                </input>
+                            </div>
+                        </form>
+                    </>
+                    :
+                    <button className='boton-nueva-categoria' onClick={() => { setMostrandoFormNuevaCategoria(true) }}>Crear nueva categoría</button>
                 }
-
+                <h2>TEMA</h2>
+                <BotonClaroOscuro
+                    temaActivo={tema}
+                    callback={activarTema}
+                />
                 <p className='texto-click-volver'>Click en cualquier sitio para volver</p>
             </div>
         </div>
