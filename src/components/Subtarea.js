@@ -1,40 +1,40 @@
-import React from "react";
-import icono_borrar_rojo from '../imgs/icono_borrar_rojo.svg'
+import React, { useState } from "react";
+import icono_borrar_rojo from "../imgs/icono_borrar_rojo.svg";
+import { useTareasContext } from "../context/TareasContext";
+import { checkSubtarea, eliminarSubtarea } from "../context/TareasActions";
 
-export function Subtarea(props){
-    const {tarea, callbackCheck, idPadre}=props;
-    const [checked, setChecked] = React.useState(tarea.checked);
-    
-    const handleChange = (evt) =>{
-        setChecked(!checked)
-    }
-    const handleEliminarSubtarea = () =>{
-        props.callbackEliminarSubTarea(tarea.id, idPadre);
-    }
+export function Subtarea(props) {
+  const { tarea, idTareaPadre } = props;
 
-    React.useEffect(()=>{
-        callbackCheck(checked, tarea.id, idPadre);
-    },[checked])
+    const {dispatch} = useTareasContext()
 
-    return(
-        <li className="subtarea-li-container">
-            <input 
-                type='checkbox' 
-                onChange={handleChange}
-                checked={checked}
-                id={tarea.id}
-                >
-            </input>
-            <label htmlFor={tarea.id}>{tarea.text}</label>
-            {checked && 
-                    <img 
-                        onClick={handleEliminarSubtarea}
-                        className='icono-borrar-tarea animate-color-change fade-in' 
-                        src={icono_borrar_rojo} 
-                        alt='icono borrar tarea'
-                    ></img>}
-            
-        </li>
-        
-    )
+  const handleChange = (evt) => {
+    dispatch(checkSubtarea(idTareaPadre, tarea.id))
+  };
+
+  const handleEliminarSubtarea = () => {
+    console.log('Se quiere eliminar');
+    dispatch(eliminarSubtarea(idTareaPadre, tarea.id))
+  };
+
+
+  return (
+    <li className="flex items-center gap-2 rounded-md bg-neutral-700 p-1">
+      <input
+        type="checkbox"
+        onChange={handleChange}
+        checked={tarea.checked}
+        id={tarea.id}
+      ></input>
+      <label htmlFor={tarea.id}>{tarea.titulo}</label>
+      {tarea.checked && (
+        <img
+          onClick={handleEliminarSubtarea}
+          className="size-5"
+          src={icono_borrar_rojo}
+          alt="icono borrar tarea"
+        ></img>
+      )}
+    </li>
+  );
 }

@@ -1,294 +1,137 @@
-import React from 'react';
-import useLocalStorage from 'use-local-storage';
-import './styles/reset.css';
-import './styles/style.css';
-import './styles/animations.css';
-import { FormularioNuevaTarea } from './components/FormularioNuevaTarea';
-import { Tarea } from './components/Tarea';
-import { NavCategorias } from './components/NavCategorias';
-import { obtenFecha } from './helpers/fechas';
-import icono_ajustes from './imgs/icono_ajustes.svg';
-import { PantallaAjustes } from './components/PantallaAjustes';
+import React from "react";
+
+import { FormularioNuevaTarea } from "./components/FormularioNuevaTarea";
+import { Tarea } from "./components/Tarea";
+import { NavCategorias } from "./components/NavCategorias";
+import { obtenFecha } from "./helpers/fechas";
+import icono_ajustes from "./imgs/icono_ajustes.svg";
+import { PantallaAjustes } from "./components/PantallaAjustes";
+import { TEMAS } from "./context/ThemeContext";
+import { ThemeSwitcher } from "./components/ThemeSwitcher";
+import { useTareasContext } from "./context/TareasContext";
+import {
+  eliminarTareasCompletadas,
+} from "./context/TareasActions";
 
 function App() {
-	const [tareasLS, setTareasLS] = useLocalStorage("tareas", []);
-	const [tareas, setTareas] = React.useState(tareasLS);
+  const { state, dispatch } = useTareasContext();
+  const { tareas, categorias, idCategoriaActiva } = state;
 
-	const [mostrandoAjustes, setMostrandoAjustes] = React.useState(false);
+  const [mostrandoAjustes, setMostrandoAjustes] = React.useState(false);
 
-	const [categoriasLS, setCategoriasLS] = useLocalStorage("categorias", []);
-	const [categorias, setCategorias] = React.useState(categoriasLS);
+  //Son las tareas de la categoria activa	(inicialmente son todas)
+  const [tareasCategoria, setTareasCategoria] = React.useState(tareas.filter((tarea) => tarea.idCategoria === idCategoriaActiva));
 
-	//Son las tareas de la categoria activa	(inicialmente son todas)
-	const [tareasCategoria, setTareasCategoria] = React.useState(tareas);
+  //Establece el tema por defecto
+  React.useEffect(() => {
+    document.documentElement.setAttribute("data-theme", TEMAS.dark);
+  }, []);
 
-	const [categoriaActivaLS, setCategoriaActivaLS] = useLocalStorage("categoriaActiva", '');
-	const [categoriaActiva, setCategoriaActiva] = React.useState(categoriaActivaLS || '');
+  //Cuando cambian las tareas o categorias, las anado al localstorage
+  React.useEffect(() => {
+    // setCategoriasLS(categorias);
+  }, [categorias]);
+  React.useEffect(() => {
+    // setTareasLS(tareas);
+  }, [tareas]);
 
-	const [tema, setTema] = useLocalStorage("tema", 'dark');
-
-	//Establece el tema por defecto
-	React.useEffect(() => { document.documentElement.setAttribute('data-theme', tema); }, [])
-
-	//Cuando cambian las tareas o categorias, las anado al localstorage
-	React.useEffect(() => { setCategoriasLS(categorias); }, [categorias])
-	React.useEffect(() => { setTareasLS(tareas); }, [tareas])
-
-	//Cuando se añade una tarea o cambia categoriaActiva, hay que actualizar tareasCategorias para que se renderice en pantalla
-	React.useEffect(() => {
-		setCategoriaActivaLS(categoriaActiva)
-		setTareasCategoria(tareas.filter(tarea => tarea.categoria == categoriaActiva));
-	}, [categoriaActiva, tareas])
-
-	//FUNCIONES DE CATEGORIAS
-	const userCreatesCategoria = (titulo) => {
-		//si ya existe una categoria con ese nombre no hace nada
-		if (categorias.some(cat => cat === titulo)) return;
-		else {
-			setCategorias(prev => {
-				return [
-					...prev,
-					titulo
-				]
-			})
-			setCategoriaActiva(titulo)
-		}
-	}
-
-	const userBorraCategoria = (titulo) => {
-		borrarNotasDeCategoria(titulo);
-		let nuevasCategorias = categorias.filter(cat => cat !== titulo)
-		setCategorias(nuevasCategorias);
-		setCategoriaActiva('')
-	}
-
-	const borrarNotasDeCategoria = (tituloCategoria) => {
-		setTareas(current =>
-			current.filter(element => {
-				return element.categoria !== tituloCategoria;
-			}),
-		);
-	}
-
-	const cambiarCategoriaActiva = (titulo) => {
-		//titulo hace referencia al texto que hay en las pestañas...
-		if (titulo === 'Sin categoría') {
-			setCategoriaActiva('');
-		} else {
-			setCategoriaActiva(titulo);
-		}
-	}
-
-	//FUNCIONES DE TAREAS
-	const crearTarea = (tituloTarea, subtareas, categoria) => {
-		setTareas(prev => {
-			return [
-				...prev,
-				{
-					id: Date.now(),
-					fecha: obtenFecha(Date.now()),
-					titulo: tituloTarea,
-					checked: false,
-					subtareas: subtareas || [],
-					categoria: categoria
-				}
-			]
-		})
-	}
-
-	const eliminarTareaConId = (idTarea) => {
-		setTareas(current =>
-			current.filter(element => {
-				return element.id !== idTarea;
-			}),
-		);
-	}
-
-	const checkTarea = (isChecked, idTarea) => {
-		const newState = tareas.map(tarea => {
-			if (tarea.id === idTarea) {
-				return { ...tarea, checked: isChecked };
-			}
-			return tarea;
-		});
-		setTareas(newState);
-	}
-
-	const editarTarea = (id, nuevoNombre) => {
-		const newState = tareas.map(tarea => {
-			if (tarea.id === id) {
-				return { ...tarea, titulo: nuevoNombre };
-			}
-			return tarea;
-		});
-		setTareas(newState);
-	}
-
-	const eliminarTareasCompletadas = () => {
-		setTareas(current =>
-			current.filter(element => {
-				return element.checked === false;
-			}),
-		);
-	}
-
-	//FUNCIONES DE SUBTAREAS
-	const checkSubTarea = (isChecked, idTarea, idTareaPadre) => {
-		let substate;
-		tareas.map(tarea => {
-			if (tarea.id === idTareaPadre) {
-				substate = tarea.subtareas.map(subtarea => {
-					if (subtarea.id === idTarea) {
-						return { ...subtarea, checked: isChecked }
-					}
-					return subtarea;
-				})
-			}
-			return tarea;
-		});
-
-		let newState = tareas.map(tarea => {
-			if (tarea.id === idTareaPadre) {
-				return { ...tarea, subtareas: substate }
-			}
-			return tarea;
-		});
-		setTareas(newState);
-	}
-
-	const nuevaSubtarea = (titulo, idPadre) => {
-		let substate;
-		tareas.map(tarea => {
-			if (tarea.id === idPadre) {
-				substate = tarea.subtareas;
-			}
-		});
-		substate.push({
-			id: Date.now(),
-			text: titulo,
-			checked: false
-		});
-
-		let newState = tareas.map(tarea => {
-			if (tarea.id === idPadre) {
-				return { ...tarea, subtareas: substate }
-			}
-			return tarea;
-		});
-		setTareas(newState);
-
-	}
-
-	const eliminarSubTarea = (idSubtarea, idPadre) => {
-		let newSubState;
-		let newState = tareas.map(tarea => {
-			if (tarea.id === idPadre) {
-				newSubState = tarea.subtareas.filter((subtarea) => {
-					return subtarea.id !== idSubtarea;
-				})
-			} else {
-				return tarea;
-			}
-		})
-		newState = tareas.map(tarea => {
-			if (tarea.id === idPadre) {
-				return { ...tarea, subtareas: newSubState }
-			} else {
-				return tarea;
-			}
-		})
-		setTareas(newState)
-	}
-
-	const activarTema = (cual) => {
-		switch (cual) {
-			case 'claro':
-				document.documentElement.setAttribute('data-theme', 'light');
-				setTema('light');
-				break;
-			case 'oscuro':
-				document.documentElement.setAttribute('data-theme', 'dark');
-				setTema('dark');
-				break;
-			default:
-		}
-	}
-
-	const hayTareasCompletadas = () => {
-		return tareas.some(tarea => tarea.checked === true);
-	}
-
-	return (
-
-		<div className="god-container horizontal-centered full-screen-height pad-1">
-
-			{mostrandoAjustes &&
-				<PantallaAjustes
-					tema={tema}
-					activarTema={activarTema}
-					categorias={categorias}
-					callbackNuevaCategoria={userCreatesCategoria}
-					handleCloseCallback={() => { setMostrandoAjustes(false) }}
-					handleBorrarCategoria={userBorraCategoria}
-				/>}
-
-			<button className='btn-abrir-ajustes' onClick={()=>{setMostrandoAjustes(true)}}>
-				<img src={icono_ajustes}></img>
-			</button>
+  //Cuando se añade una tarea o cambia categoriaActiva, hay que actualizar tareasCategorias para que se renderice en pantalla
+  React.useEffect(() => {
+    // setCategoriaActivaLS(categoriaActiva);
+    setTareasCategoria(
+      tareas.filter((tarea) => tarea.idCategoria === idCategoriaActiva)
+    );
+  }, [idCategoriaActiva, tareas]);
 
 
+  const hayTareasCompletadas = () => {
+    return tareas.some((tarea) => tarea.checked === true);
+  };
 
-			<h1>Tareas</h1>
+  const handleEliminarTareasCompletadas = () => {
+    dispatch(eliminarTareasCompletadas());
+  };
 
-			<p style={{ padding: '0.75em' }}>Un texto motivador...</p>
+  return (
+    <div className="mx-auto flex min-h-dvh w-full flex-col bg-zinc-200 p-2 text-zinc-900 md:w-8/12 lg:w-7/12 xl:w-6/12 2xl:w-5/12 dark:bg-zinc-900 dark:text-zinc-200">
+      <div
+        className={`flex flex-col justify-between fixed top-0 z-10 h-dvh w-full dark:bg-black/90 bg-neutral-100/90 backdrop-blur-[2px] ${
+          mostrandoAjustes ? "left-0" : "left-full"
+        } transition-all duration-200 pt-20 pb-4`}
+      >
+        <PantallaAjustes
+          handleCloseCallback={() => {
+            setMostrandoAjustes(false);
+          }}
+        />
+      </div>
 
-			<FormularioNuevaTarea
-				categoriaActiva={categoriaActiva}
-				categorias={categorias}
-				callback={crearTarea}
-			/>
+      <div className="flex w-full items-center justify-between">
+        <button
+          aria-label="Botón abrir menú lateral"
+          onClick={() => {
+            setMostrandoAjustes(!mostrandoAjustes);
+          }}
+          className="z-20 flex size-6 flex-col justify-center gap-2"
+        >
+          <span
+            className={`${
+              mostrandoAjustes ? "rotate-[45deg] scale-[120%]" : "rotate-0"
+            } h-0.5 w-full rounded-lg dark:bg-neutral-200 transition-all duration-200 origin-top-left bg-neutral-900`}
+          ></span>
+          <span
+            className={`${
+              mostrandoAjustes ? "opacity-0" : "opacity-1"
+            } h-0.5 w-full rounded-lg dark:bg-neutral-200 transition-all duration-200 origin-bottom-left bg-neutral-900`}
+          ></span>
+          <span
+            className={`${
+              mostrandoAjustes ? "-rotate-[45deg] scale-[120%]" : "rotate-0"
+            } h-0.5 w-full rounded-lg dark:bg-neutral-200 transition-all duration-200 origin-bottom-left bg-neutral-900`}
+          ></span>
+        </button>
 
-			{tareas.length > 0 &&
-				<>
-					<NavCategorias
-						categorias={categorias}
-						categoriaActiva={categoriaActiva}
-						callbackCrearCategoria={userCreatesCategoria}
-						callbackBorrarCategoria={userBorraCategoria}
-						callbackCategoriaActiva={cambiarCategoriaActiva}
-					/>
+        <h1 className="text-3xl">Tareas</h1>
 
-					<ul className='lista-tareas'>
-						{
-							(tareasCategoria.length <= 0)
-								? <p className='empty-tareas-message'>No hay tareas pendientes...</p>
-								: tareasCategoria.map(tarea => {
-									return (
-										<Tarea
-											key={tarea.id}
-											id={tarea.id}
-											tarea={tarea}
-											callbackCheck={checkTarea}
-											callbackSubtareaCheck={checkSubTarea}
-											callbackBorrarTarea={eliminarTareaConId}
-											callbackEliminarSubTarea={eliminarSubTarea}
-											callbackNuevaSubtarea={nuevaSubtarea}
-											callbackGuardarTarea={editarTarea}
-										/>
-									)
-								})
-						}
-					</ul>
-				</>
-			}
+        <ThemeSwitcher />
+      </div>
 
-			{hayTareasCompletadas() &&
-				<button className='boton-eliminar-completadas' onClick={eliminarTareasCompletadas}>Eliminar tareas completadas</button>
-			}
-		</div>
+      <p className="p-2 text-center">Un texto motivador...</p>
 
-	);
+      <FormularioNuevaTarea />
 
+      <NavCategorias />
+
+        <>
+          <ul className="flex flex-col gap-2">
+            {tareasCategoria.length <= 0 ? (
+              <p className="p-4">
+                No hay tareas pendientes...
+              </p>
+            ) : (
+              tareasCategoria.map((tarea) => {
+                return (
+                  <Tarea
+                    key={tarea.id}
+                    tarea={tarea}
+                  />
+                );
+              })
+            )}
+          </ul>
+        </>
+
+
+      {hayTareasCompletadas() && (
+        <button
+          className="mt-2 text-red-400"
+          onClick={handleEliminarTareasCompletadas}
+        >
+          Eliminar tareas completadas
+        </button>
+      )}
+    </div>
+  );
 }
 
 export default App;

@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+    font-family: monospace;
+    transition: background-color;
+    transition-duration: 400ms;
+}
+
+.wrapper {
+    display: flex;
+}
+
+.inner {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+
+.wrapper.is-open .inner {
+    max-height: 100%;
+}

@@ -1,25 +1,53 @@
 import React from "react";
+import { useTareasContext } from "../context/TareasContext";
+import { setCategoriaActiva } from "../context/TareasActions";
 
-export function NavCategorias(props) {
+export function NavCategorias() {
 
-    const userClicksCategoria = (evt) => {
-        if (evt.target.className === 'nav-categorias') {
-            return;
-        }
-        props.callbackCategoriaActiva(evt.target.textContent);
+  const {state, dispatch} = useTareasContext()
+  const {categorias, idCategoriaActiva} = state
 
-    }
+  console.log(categorias);
 
-    return (
-        <div className="nav-categorias-y-boton">
-            <div className='nav-categorias'>
-                <div className={`tab-header-categoria ${(props.categoriaActiva === '') ? `categoria-activa` : ``}`} onClick={userClicksCategoria}>Sin categoría</div>
-                {props.categorias.map((cat) => {
-                    return (
-                        <div key={cat + Date.now()} className={`tab-header-categoria ${(props.categoriaActiva === cat) ? `categoria-activa` : ``}`} onClick={userClicksCategoria}>{cat}</div>
-                    )
-                })}
-            </div>
-        </div>
-    )
+  const userClicksCategoria = (idCategoria) => {
+    console.log('pONIENDO CAT ACTIVA: ',idCategoria);
+    dispatch(setCategoriaActiva(idCategoria))
+  };
+  const userClicksSinCategoria = () => {
+    dispatch(setCategoriaActiva(''))
+  };
+
+  return (
+    <div className="">
+      <ul className="my-2 flex gap-2 overflow-x-auto">
+        <li
+          className={`border border-neutral-800 whitespace-nowrap max-w-32 cursor-pointer p-1 rounded-md ${
+            idCategoriaActiva === ''
+              ? `dark:border-neutral-500 bg-neutral-400 dark:bg-neutral-700`
+              : ``
+          } `}
+          onClick={()=>{userClicksSinCategoria()}}
+        >
+          Sin categoría
+        </li>
+        {categorias.map((cat) => {
+          return (
+            <li
+              key={cat.id}
+              className={`border border-neutral-800 whitespace-nowrap max-w-32 cursor-pointer p-1 rounded-md
+              ${
+                idCategoriaActiva === cat.id
+                  ? `  dark:border-neutral-500 bg-neutral-400 dark:bg-neutral-700`
+                  : ``
+              }
+              `}
+              onClick={()=>userClicksCategoria(cat.id)}
+            >
+              {cat.nombre}
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
 }

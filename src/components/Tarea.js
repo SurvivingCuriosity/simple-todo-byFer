@@ -1,118 +1,121 @@
-import React from "react";
-import icono_editar from '../imgs/icono_editar.svg'
-import icono_guardar from '../imgs/icono_guardar.svg'
-import icono_borrar_rojo from '../imgs/icono_borrar_rojo.svg'
-import icono_expandir_gris from '../imgs/icono_expandir_gris.svg'
+import React, { useState } from "react";
+import icono_editar from "../imgs/icono_editar.svg";
+import icono_guardar from "../imgs/icono_guardar.svg";
+import icono_borrar_rojo from "../imgs/icono_borrar_rojo.svg";
+import icono_expandir_gris from "../imgs/icono_expandir_gris.svg";
 import { ListaSubtareas } from "./ListaSubtareas";
+import { useTareasContext } from "../context/TareasContext";
+import {
+  checkTarea,
+  eliminarTarea,
+  toggleExpandTarea,
+  updateTarea,
+} from "../context/TareasActions";
 
-export function Tarea(props) {
-    const [checked, setChecked] = React.useState(props.tarea.checked);
-    const [editandoTarea, setEditandoTarea] = React.useState(false);
-    const [mostrandoSubTareas, setMostrandoSubTareas] = React.useState(false);
-    const [nuevoNombre, setNuevoNombre] = React.useState(props.tarea.titulo);
+export function Tarea({ tarea }) {
+  const { dispatch } = useTareasContext();
 
+  const [editandoTarea, setEditandoTarea] = useState(false);
+  const [nuevoNombre, setNuevoNombre] = useState(tarea.titulo);
 
-    const handleChange = (evt) => {
-        setChecked(!checked)
-    }
-    const guardarTarea = () => {
-        setEditandoTarea(false);
-        props.callbackGuardarTarea(props.tarea.id, nuevoNombre);
-    }
-    const changeNuevoNombre = (e) => {
-        setNuevoNombre(e.target.value)
-    }
-    const eliminarTarea = () => {
-        props.callbackBorrarTarea(props.tarea.id);
-    }
+  const handleCheckTarea = () => {
+    dispatch(checkTarea(tarea.id));
+  };
 
-    React.useEffect(() => {
-        props.callbackCheck(checked, props.tarea.id);
-    }, [checked])
+  const guardarTarea = () => {
+    setEditandoTarea(false);
+    dispatch(updateTarea(nuevoNombre, tarea.id));
+  };
 
+  const handleEliminarTarea = () => {
+    dispatch(eliminarTarea(tarea.id));
+  };
 
-    const subtareaCompletada = (checked, idTarea, idPadre) => {
-        props.callbackSubtareaCheck(checked, idTarea, idPadre);
-    }
-    return (
-        <li className='tarea-container'>
-            <p className="fecha-tarea">{props.tarea.fecha}</p>
-            <div className='tarea-checkbox-container'>
-                <div className="input-and-button">
-                    <input
-                        type='checkbox'
-                        onChange={handleChange}
-                        checked={checked}
-                        id={props.tarea.id}
-                    >
-                    </input>
-                    {editandoTarea === false
-                        ? <><label htmlFor={props.tarea.id}>{props.tarea.titulo}</label><span>{`(${props.tarea.subtareas.length})`}</span></>
-                        : <input type='text' onChange={changeNuevoNombre} value={nuevoNombre}></input>
-                    }
+  const handleExpandTarea = () => {
+    dispatch(toggleExpandTarea(tarea.id));
+  };
 
-                </div>
-                <div className="iconos-tarea-container">
+  return (
+    <li className="relative flex flex-col justify-center rounded-md border border-neutral-500 bg-zinc-300 px-3 dark:bg-zinc-800">
+      <div className="flex flex-row justify-between">
+        <div
+          className="flex w-full cursor-pointer flex-row items-center gap-2 py-1"
+        >
+          <input
+            type="checkbox"
+            className="scale-125 cursor-pointer"
+            onChange={handleCheckTarea}
+            checked={tarea.checked}
+            id={tarea.titulo}
+            onClick={(e) => e.stopPropagation()}
+          ></input>
+          {editandoTarea === false ? (
+            <label
+              htmlFor={tarea.titulo}
+              className="w-full cursor-pointer p-1"
+            >
+              {tarea.titulo} {`(${tarea.subtareas.length})`}
+            </label>
+          ) : (
+            <input
+              autoFocus
+              type="text"
+              className="rounded-md p-1 text-neutral-800"
+              onChange={(evt) => {
+                setNuevoNombre(evt.target.value);
+              }}
+              value={nuevoNombre}
+            ></input>
+          )}
+        </div>
 
-                    {mostrandoSubTareas === true ? <img
-                        style={{transform: `rotate(180deg)` }}
-                        onClick={() => { setMostrandoSubTareas(!mostrandoSubTareas) }}
-                        className='icono-expandir-subtareas animate-transform'
-                        src={icono_expandir_gris}
-                        alt='icono mostrar subtareas'
-                    ></img> :
-                        <img
-                            style={{transform: `rotate(0deg)` }}
-                            onClick={() => { setMostrandoSubTareas(!mostrandoSubTareas) }}
-                            className='icono-expandir-subtareas animate-transform'
-                            src={icono_expandir_gris}
-                            alt='icono mostrar subtareas'
-                        ></img>}
+        <div className="flex flex-row items-center justify-end gap-2">
+          <button className="size-7 rounded-full bg-neutral-400 p-1 dark:bg-neutral-600">
+            <img
+              onClick={handleExpandTarea}
+              className={`${
+                tarea.expanded ? "rotate-180" : "rotate-0"
+              } transition-transform duration-200`}
+              src={icono_expandir_gris}
+              alt="icono mostrar subtareas"
+            ></img>
+          </button>
+          {editandoTarea === true ? (
+            <button className="size-7 rounded-full bg-neutral-400 p-1 dark:bg-neutral-600">
+              <img
+                onClick={guardarTarea}
+                src={icono_guardar}
+                className="" alt="icono borrar tarea"
+              ></img>
+            </button>
+          ) : (
+            <button className="size-7 rounded-full bg-neutral-400 p-1 dark:bg-neutral-600">
+              <img
+                onClick={() => {
+                  setEditandoTarea(true);
+                }}
+                src={icono_editar}
+                className="" alt="icono borrar tarea"
+              ></img>
+            </button>
+          )}
+          {tarea.checked && (
+            <button className="size-7 rounded-full bg-neutral-400 p-1 dark:bg-neutral-600">
+              <img
+                onClick={handleEliminarTarea}
+                src={icono_borrar_rojo}
+                className="" alt="icono borrar tarea"
+              ></img>
+            </button>
+          )}
+        </div>
+      </div>
 
-
-
-
-                    
-                    {editandoTarea === true
-                        ?
-                        <img
-                            onClick={guardarTarea}
-                            className='icono-borrar-tarea fade-in'
-                            src={icono_guardar}
-                            alt='icono borrar tarea'
-                        ></img>
-                        :
-                        <img
-                            onClick={() => { setEditandoTarea(true) }}
-                            className='icono-borrar-tarea fade-in'
-                            src={icono_editar}
-                            alt='icono borrar tarea'
-                        ></img>
-
-                    }
-                    {checked &&
-                        <img
-                            onClick={eliminarTarea}
-                            className='icono-borrar-tarea fade-in'
-                            src={icono_borrar_rojo}
-                            alt='icono borrar tarea'
-                        ></img>
-                    }
-                </div>
-            </div>
-            <div className="delay-fade-in">
-                {
-                    mostrandoSubTareas &&
-                    <ListaSubtareas
-                        idPadre={props.tarea.id}
-                        subtareas={props.tarea.subtareas}
-                        callbackCheck={subtareaCompletada}
-                        callbackEliminarSubTarea={props.callbackEliminarSubTarea}
-                        callbackNuevaSubtarea={props.callbackNuevaSubtarea}
-                    />
-                }
-            </div>
-        </li>
-
-    )
+      {tarea.expanded && (
+        <div className="ml-5 flex flex-col gap-2 py-4">
+          <ListaSubtareas tarea={tarea} subtareas={tarea.subtareas} />
+        </div>
+      )}
+    </li>
+  );
 }
