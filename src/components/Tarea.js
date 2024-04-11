@@ -36,7 +36,7 @@ export function Tarea({ tarea }) {
   };
 
   return (
-    <li className="relative flex flex-col justify-center rounded-md border border-neutral-500 bg-zinc-300 px-3 dark:bg-zinc-800">
+    <li className="relative flex flex-col justify-center rounded-md border border-neutral-500 bg-neutral-200 px-3 dark:bg-neutral-800">
       <div className="flex flex-row justify-between">
         <div
           className="flex w-full cursor-pointer flex-row items-center gap-2 py-1"

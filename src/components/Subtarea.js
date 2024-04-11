@@ -19,7 +19,7 @@ export function Subtarea(props) {
 
 
   return (
-    <li className="flex items-center gap-2 rounded-md bg-neutral-700 p-1">
+    <li className="flex items-center gap-2 rounded-md bg-neutral-300 p-1 dark:bg-neutral-700">
       <input
         type="checkbox"
         onChange={handleChange}

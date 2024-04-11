@@ -129,7 +129,7 @@ export function FormularioNuevaTarea() {
         <div
           className={`flex w-full items-center gap-4 ${
             tituloTarea === "" ? "rounded-lg" : "rounded-t-lg"
-          }  bg-zinc-300 dark:bg-zinc-800 p-2`}
+          }  bg-neutral-200 dark:bg-neutral-800 p-2`}
         >
           <label htmlFor="input-crear-tarea" className="text-base font-bold">
             Tarea
@@ -158,7 +158,7 @@ export function FormularioNuevaTarea() {
         >
           <div className="w-full">
             <div
-              className={`rounded-b-lg bg-zinc-300  dark:bg-zinc-800 inner flex h-full flex-col justify-between`}
+              className={`rounded-b-lg bg-neutral-200  dark:bg-neutral-800 inner flex h-full flex-col justify-between`}
             >
               <div className="p-2">
                 <div className="flex min-h-14 items-start py-2">

@@ -6,13 +6,13 @@ import useLocalStorage from "use-local-storage";
 const TareasContext = createContext();
 
 export const TareasContextProvider = ({ children }) => {
-  const [tareasLS, setTareasLS] = useLocalStorage("todobyfer_tareas", []);
+  const [tareasLS, setTareasLS] = useLocalStorage("tareas", []);
   const [categoriasLS, setCategoriasLS] = useLocalStorage(
-    "todobyfer_categorias",
+    "categorias",
     []
   );
   const [idCategoriaActivaLS, setIdCategoriaActivaLS] = useLocalStorage(
-    "todobyfer_idCategoriaActiva",
+    "idCategoriaActiva",
     ""
   );
 

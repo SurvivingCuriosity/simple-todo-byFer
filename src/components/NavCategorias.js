@@ -23,7 +23,7 @@ export function NavCategorias() {
         <li
           className={`border border-neutral-800 whitespace-nowrap max-w-32 cursor-pointer p-1 rounded-md ${
             idCategoriaActiva === ''
-              ? `dark:border-neutral-500 bg-neutral-400 dark:bg-neutral-700`
+              ? `dark:border-neutral-500 bg-neutral-300 dark:bg-neutral-700`
               : ``
           } `}
           onClick={()=>{userClicksSinCategoria()}}
@@ -37,7 +37,7 @@ export function NavCategorias() {
               className={`border border-neutral-800 whitespace-nowrap max-w-32 cursor-pointer p-1 rounded-md
               ${
                 idCategoriaActiva === cat.id
-                  ? `  dark:border-neutral-500 bg-neutral-400 dark:bg-neutral-700`
+                  ? `  dark:border-neutral-500 bg-neutral-300 dark:bg-neutral-700`
                   : ``
               }
               `}

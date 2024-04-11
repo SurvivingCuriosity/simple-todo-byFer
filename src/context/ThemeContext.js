@@ -10,7 +10,7 @@ export const TEMAS = {
 
 export const ThemeContextProvider = ({ children }) => {
 
-  const [temaLS, setTemaLS] = useLocalStorage("todobyfer_tema", TEMAS.dark);
+  const [temaLS, setTemaLS] = useLocalStorage("tema", TEMAS.dark);
 
   const [tema, setTema] = useState(temaLS);
 

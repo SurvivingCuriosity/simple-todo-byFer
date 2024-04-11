@@ -53,7 +53,7 @@ function App() {
   };
 
   return (
-    <div className="mx-auto flex min-h-dvh w-full flex-col bg-zinc-200 p-2 text-zinc-900 md:w-8/12 lg:w-7/12 xl:w-6/12 2xl:w-5/12 dark:bg-zinc-900 dark:text-zinc-200">
+    <div className="mx-auto flex min-h-dvh w-full flex-col bg-neutral-50 p-2 text-neutral-900 md:w-8/12 lg:w-7/12 xl:w-6/12 2xl:w-5/12 dark:bg-neutral-900 dark:text-neutral-200">
       <div
         className={`flex flex-col justify-between fixed top-0 z-10 h-dvh w-full dark:bg-black/90 bg-neutral-100/90 backdrop-blur-[2px] ${
           mostrandoAjustes ? "left-0" : "left-full"
