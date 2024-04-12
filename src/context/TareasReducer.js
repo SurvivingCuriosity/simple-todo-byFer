@@ -3,6 +3,7 @@ import { obtenFecha } from "../helpers/fechas";
 
 // TareasReducer.js
 export const ACTIONS = {
+  IMPORTAR_DATOS: "IMPORTAR_DATOS",
   CREAR_TAREA: "CREAR_TAREA",
   ELIMINAR_TAREA: "ELIMINAR_TAREA",
   ELIMINAR_TAREAS_COMPLETADAS: "ELIMINAR_TAREAS_COMPLETADAS",
@@ -22,13 +23,11 @@ export const tareasReducer = produce((draft, action) => {
   let categorias = draft.categorias;
 
   if (action.type === ACTIONS.CREAR_TAREA) {
+    const { titulo, subtareas, idCategoria } = action.payload;
 
-
-    const {titulo,subtareas,idCategoria} = action.payload
-
-    console.log('El titulo: ',titulo);
-    console.log('El subtareas: ',subtareas);
-    console.log('El categoria: ',idCategoria);
+    console.log("El titulo: ", titulo);
+    console.log("El subtareas: ", subtareas);
+    console.log("El categoria: ", idCategoria);
 
     tareas.unshift({
       id: Date.now(),
@@ -96,7 +95,7 @@ export const tareasReducer = produce((draft, action) => {
   }
 
   if (action.type === ACTIONS.CREAR_CATEGORIA) {
-    console.log('Se quiere crear: ',action.payload);
+    console.log("Se quiere crear: ", action.payload);
     categorias.unshift({
       id: Date.now(),
       nombre: action.payload,
@@ -122,5 +121,13 @@ export const tareasReducer = produce((draft, action) => {
       categorias.unshift(categoriaActiva);
     }
     draft.idCategoriaActiva = action.payload;
+  }
+
+  if (action.type === ACTIONS.IMPORTAR_DATOS) {
+    const datos = action.payload;
+    console.log("Datos importados: ", datos);
+    tareas.push(...datos.tareas)
+    categorias.push(...datos.categorias);
+    draft.idCategoriaActiva = datos.idCategoriaActiva;
   }
 });

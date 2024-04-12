@@ -2,6 +2,10 @@ import { ACTIONS } from "./TareasReducer";
 
 // TAREAS
 
+export const importarDatos = ({tareas, categorias, idCategoriaActiva}) => {
+  return { type: ACTIONS.IMPORTAR_DATOS, payload: {tareas, categorias, idCategoriaActiva} };
+};
+
 export const crearTarea = ({titulo, subtareas, idCategoria}) => {
   return { type: ACTIONS.CREAR_TAREA, payload: {titulo, subtareas, idCategoria} };
 };
