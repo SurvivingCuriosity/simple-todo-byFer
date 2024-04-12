@@ -4,14 +4,23 @@ const CACHE_NAME = 'mi-app-cache-v1';
 const urlsToCache = [
   '/',
   '/index.html',
-  '/favicon.ico', // Asegúrate de incluir el favicon si lo tienes
+  // '/favicon/favicon.ico', // Asegúrate de incluir el favicon si lo tienes
   // Archivos generados por CRA
-  '/static/css/main.*.css',
-  '/static/js/main.*.js',
-  '/static/js/0.*.chunk.js', // Pueden haber varios archivos con nombres diferentes
-  '/static/js/*.chunk.js', // Otros archivos de chunk de JavaScript generados
+  // '/static/css/main.*.css',
+  // '/static/js/main.*.js',
   // Otros recursos estáticos (imágenes, fuentes, etc.)
-  '/static/media/logo.*.svg',
+  // '/static/media/export_icon.*.svg',
+  // '/static/media/icono_ajustes.*.svg',
+  // '/static/media/icono_anadir_disabled.*.svg',
+  // '/static/media/icono_anadir_enabled.*.svg',
+  // '/static/media/icono_borrar_rojo.*.svg',
+  // '/static/media/icono_editar.*.svg',
+  // '/static/media/icono_expandir_gris.*.svg',
+  // '/static/media/icono_guardar.*.svg',
+  // '/static/media/import_icon.*.svg',
+  // '/static/media/export_icon.*.svg',
+  // '/static/media/moon_icon.*.svg',
+  // '/static/media/sun_icon.*.svg',
   // Agrega aquí otros archivos estáticos que quieras cachear
 ];
 
