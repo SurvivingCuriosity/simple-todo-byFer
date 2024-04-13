@@ -1,19 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import icono_anadir_disabled from "../imgs/icono_anadir_disabled.svg";
 import icono_anadir_enabled from "../imgs/icono_anadir_enabled.svg";
 import icono_borrar_rojo from "../imgs/icono_borrar_rojo.svg";
 import icono_exportar from "../imgs/export_icon.svg";
 import icono_importar from "../imgs/import_icon.svg";
 import { useTareasContext } from "../context/TareasContext";
-import { crearCategoria, eliminarCategoria, importarDatos } from "../context/TareasActions";
-import { saveAs } from "file-saver";
+import {
+  crearCategoria,
+  eliminarCategoria,
+} from "../context/TareasActions";
+import { handleDescargarCategoria, handleDescargarDatos } from "../helpers/exportar";
+import { useImportar } from "../helpers/useImportar";
 export function PantallaAjustes() {
   const { state, dispatch } = useTareasContext();
-  const {categorias, idCategoriaActiva, tareas } = state;
+  const {handleImportarDatos} = useImportar()
+  const { categorias, idCategoriaActiva, tareas } = state;
 
   const [mostrandoFormNuevaCategoria, setMostrandoFormNuevaCategoria] =
     useState(false);
-  const [mostrandoSubirArchivo, setMostrandoSubirArchivo] = useState(false);
   const [tituloNuevaCategoria, setTituloNuevaCategoria] = useState("");
 
   const handleSubmit = (evt) => {
@@ -29,59 +33,27 @@ export function PantallaAjustes() {
     dispatch(eliminarCategoria(categoria.id));
   };
 
-  const handleDescargarDatos = () => {
-    console.log("Se ha descargado los datos");
-    const contenido = JSON.stringify({
-      categorias,
-      tareas,
-      idCategoriaActiva
-    });
-    const fecha = new Date()
-    const fechaString = fecha.getDay() + "/" + fecha.getMonth()+1 + "/" + fecha.getFullYear();
-    const nombreArchivo = "tareas-" + fechaString + ".json";
-
-    // Crear un nuevo Blob con el contenido de texto
-    const blob = new Blob([contenido], { type: "text/plain;charset=utf-8" });
-
-    // Utilizar la función saveAs para iniciar la descarga del archivo
-    saveAs(blob, nombreArchivo);
-  };
 
   const handleInputClick = () => {
     // Simula el clic en el input file cuando se hace clic en el botón
     document.getElementById("input-file").click();
   };
 
+  const handleClickDescargarDatos = () => {
+    handleDescargarDatos(tareas, categorias, idCategoriaActiva);
+  }
+  const handleClickDescargarCategoria = (idCategoria) => {
+    handleDescargarCategoria(categorias.find(c => c.id === idCategoria)); 
+  }
+
   const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    console.log("Archivo seleccionado:", file);
+    console.log('HANDLING FILE CHANGE');
+    handleImportarDatos(e.target.files[0]);
+  };
 
-    if (!file) {
-      console.error("No se seleccionó ningún archivo.");
-      return;
-    }
-
-    // Verificar que el archivo sea de tipo JSON
-    if (!file.name.endsWith(".json")) {
-      console.error("El archivo seleccionado no es un archivo JSON.");
-      return;
-    }
-
-    // Leer el contenido del archivo
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      try {
-        const jsonContent = JSON.parse(event.target.result);
-        dispatch(importarDatos(jsonContent));
-        console.log("Contenido del archivo JSON:", jsonContent);
-      } catch (error) {
-        console.error(
-          "Error al analizar el contenido del archivo JSON:",
-          error
-        );
-      }
-    };
-    reader.readAsText(file);
+  const handleImportarCategoria = (e) => {
+    console.log('HANDLING FILE CHANGE');
+    handleImportarCategoria(e.target.files[0]);
   };
 
   return (
@@ -145,7 +117,7 @@ export function PantallaAjustes() {
         <label htmlFor="input-file" className="cursor-pointer">
           <button
             className="mx-auto flex w-fit items-center justify-between gap-2 whitespace-nowrap rounded-lg bg-zinc-300 p-1 px-2 text-xs dark:bg-zinc-800"
-            onClick={handleInputClick}
+            onClick={handleImportarCategoria}
           >
             <img
               src={icono_importar}
@@ -155,7 +127,6 @@ export function PantallaAjustes() {
             Importar categoria
           </button>
         </label>
-
         <ul className="flex w-full flex-col gap-2 p-2">
           {categorias.length > 0 ? (
             categorias.map((cat) => {
@@ -168,7 +139,7 @@ export function PantallaAjustes() {
                     <p>{cat.nombre}</p>
                     <button
                       onClick={() => {
-                        handleDescargarDatos();
+                        handleClickDescargarCategoria(cat.id);
                       }}
                       className="flex w-fit items-center justify-between gap-2 whitespace-nowrap rounded-lg bg-zinc-300 p-1 px-2 text-xs dark:bg-zinc-800"
                     >
@@ -200,7 +171,7 @@ export function PantallaAjustes() {
       <div className="flex flex-row justify-between gap-2 text-neutral-500 dark:text-neutral-400">
         <button
           onClick={() => {
-            handleDescargarDatos();
+            handleClickDescargarDatos();
           }}
           className="flex w-fit items-center justify-between gap-2 whitespace-nowrap rounded-lg bg-zinc-300 p-1 px-2 text-xs dark:bg-zinc-800"
         >

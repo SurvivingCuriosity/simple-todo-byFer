@@ -1,9 +1,11 @@
 import { produce } from "immer";
 import { obtenFecha } from "../helpers/fechas";
+import { toast } from "react-toastify";
 
 // TareasReducer.js
 export const ACTIONS = {
   IMPORTAR_DATOS: "IMPORTAR_DATOS",
+  IMPORTAR_CATEGORIA: "IMPORTAR_CATEGORIA",
   CREAR_TAREA: "CREAR_TAREA",
   ELIMINAR_TAREA: "ELIMINAR_TAREA",
   ELIMINAR_TAREAS_COMPLETADAS: "ELIMINAR_TAREAS_COMPLETADAS",
@@ -24,11 +26,6 @@ export const tareasReducer = produce((draft, action) => {
 
   if (action.type === ACTIONS.CREAR_TAREA) {
     const { titulo, subtareas, idCategoria } = action.payload;
-
-    console.log("El titulo: ", titulo);
-    console.log("El subtareas: ", subtareas);
-    console.log("El categoria: ", idCategoria);
-
     tareas.unshift({
       id: Date.now(),
       fecha: obtenFecha(Date.now()),
@@ -129,5 +126,10 @@ export const tareasReducer = produce((draft, action) => {
     tareas.push(...datos.tareas)
     categorias.push(...datos.categorias);
     draft.idCategoriaActiva = datos.idCategoriaActiva;
+  }
+
+  if (action.type === ACTIONS.IMPORTAR_CATEGORIA) {
+    const categoria = action.payload;
+    categorias.push(categoria);
   }
 });

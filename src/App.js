@@ -3,15 +3,15 @@ import React from "react";
 import { FormularioNuevaTarea } from "./components/FormularioNuevaTarea";
 import { Tarea } from "./components/Tarea";
 import { NavCategorias } from "./components/NavCategorias";
-import { obtenFecha } from "./helpers/fechas";
-import icono_ajustes from "./imgs/icono_ajustes.svg";
 import { PantallaAjustes } from "./components/PantallaAjustes";
 import { TEMAS } from "./context/ThemeContext";
 import { ThemeSwitcher } from "./components/ThemeSwitcher";
 import { useTareasContext } from "./context/TareasContext";
+import 'react-toastify/dist/ReactToastify.css';
 import {
   eliminarTareasCompletadas,
 } from "./context/TareasActions";
+import { Bounce, ToastContainer } from "react-toastify";
 
 function App() {
   const { state, dispatch } = useTareasContext();
@@ -130,6 +130,20 @@ function App() {
           Eliminar tareas completadas
         </button>
       )}
+      <ToastContainer
+          position="top-center"
+          autoClose={2000}
+          hideProgressBar
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="dark"
+          transition={Bounce}
+          toastClassName={`rounded-md border border-neutral-500 m-2 w-10/12 mx-auto bg-neutral-800`} 
+        />
     </div>
   );
 }

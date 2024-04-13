@@ -4,7 +4,7 @@ import { FormularioSubtareas } from "./FormularioSubtareas";
 import { PreviewSubtareas } from "./PreviewSubtareas";
 import { useTareasContext } from "../context/TareasContext";
 import { crearTarea } from "../context/TareasActions";
-
+import { toast } from "react-toastify";
 export function FormularioNuevaTarea() {
   const { dispatch, state } = useTareasContext();
   const { idCategoriaActiva, categorias } = state;
@@ -39,6 +39,9 @@ export function FormularioNuevaTarea() {
   };
 
   const handleSubmit = (evt) => {
+
+    toast.success('Tarea agregada!');
+
     evt.preventDefault();
     if (tituloTarea === "") return;
     dispatch(

@@ -2,12 +2,21 @@ import { ACTIONS } from "./TareasReducer";
 
 // TAREAS
 
-export const importarDatos = ({tareas, categorias, idCategoriaActiva}) => {
-  return { type: ACTIONS.IMPORTAR_DATOS, payload: {tareas, categorias, idCategoriaActiva} };
+export const importarDatos = ({ tareas, categorias, idCategoriaActiva }) => {
+  return {
+    type: ACTIONS.IMPORTAR_DATOS,
+    payload: { tareas, categorias, idCategoriaActiva },
+  };
+};
+export const importarCategoria = (categoria) => {
+  return { type: ACTIONS.IMPORTAR_DATOS, payload: categoria };
 };
 
-export const crearTarea = ({titulo, subtareas, idCategoria}) => {
-  return { type: ACTIONS.CREAR_TAREA, payload: {titulo, subtareas, idCategoria} };
+export const crearTarea = ({ titulo, subtareas, idCategoria }) => {
+  return {
+    type: ACTIONS.CREAR_TAREA,
+    payload: { titulo, subtareas, idCategoria },
+  };
 };
 
 export const eliminarTarea = (idTarea) => {
@@ -29,19 +38,25 @@ export const toggleExpandTarea = (idTarea) => {
 // SUBTAREAS
 
 export const updateTarea = (nuevoTitulo, idTarea) => {
-  return { type: ACTIONS.UPDATE_TAREA, payload: {nuevoTitulo, idTarea} };
+  return { type: ACTIONS.UPDATE_TAREA, payload: { nuevoTitulo, idTarea } };
 };
 
 export const addSubtarea = (subtarea, idTarea) => {
-  return { type: ACTIONS.ADD_SUBTAREA, payload: {subtarea, idTarea} };
+  return { type: ACTIONS.ADD_SUBTAREA, payload: { subtarea, idTarea } };
 };
 
 export const checkSubtarea = (idTareaPadre, idSubtarea) => {
-  return { type: ACTIONS.CHECK_SUBTAREA, payload: {idTareaPadre, idSubtarea} };
+  return {
+    type: ACTIONS.CHECK_SUBTAREA,
+    payload: { idTareaPadre, idSubtarea },
+  };
 };
 
 export const eliminarSubtarea = (idTareaPadre, idSubtarea) => {
-  return { type: ACTIONS.ELIMINAR_SUBTAREA, payload: {idTareaPadre, idSubtarea} };
+  return {
+    type: ACTIONS.ELIMINAR_SUBTAREA,
+    payload: { idTareaPadre, idSubtarea },
+  };
 };
 
 // CATEGORIAS

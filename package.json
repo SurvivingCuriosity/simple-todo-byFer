@@ -13,12 +13,13 @@
     "react-dom": "^18.2.0",
     "react-scripts": "^5.0.1",
     "react-select": "^5.4.0",
+    "react-toastify": "^10.0.5",
     "use-local-storage": "^2.3.6",
     "uuid": "^9.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "dev": "react-scripts start",
     "build": "react-scripts build",
     "test": "cucumber-js ./src/tests/features/create-task.feature --require ./src/tests/features/step-definitions/*.js",
     "eject": "react-scripts eject"
