@@ -123,12 +123,14 @@ function App() {
 
 
       {hayTareasCompletadas() && (
+        <>
         <button
           className="mt-2 text-red-400"
           onClick={handleEliminarTareasCompletadas}
-        >
+          >
           Eliminar tareas completadas
         </button>
+          </>
       )}
       <ToastContainer
           position="top-center"
