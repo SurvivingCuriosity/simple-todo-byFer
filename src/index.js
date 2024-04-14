@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
-import "./index.css";
+import "./styles/index.css";
 import { ThemeContextProvider } from "./context/ThemeContext";
 import { TareasContextProvider } from "./context/TareasContext";
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';

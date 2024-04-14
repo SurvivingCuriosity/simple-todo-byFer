@@ -27,11 +27,14 @@ export const ThemeContextProvider = ({ children }) => {
     if (html !== null) {
         if (tema === TEMAS.dark) {
             html.classList.add('dark');
+            html.setAttribute('data-theme', 'dark'); // Utiliza setAttribute para establecer el valor del atributo
         } else {
             html.classList.remove('dark');
+            html.setAttribute('data-theme', 'light'); // Utiliza setAttribute para establecer el valor del atributo
         }
     }
-}, [tema])
+}, [tema]);
+
 
   return (
     <ThemeContext.Provider value={{ tema, activarTema }}>

@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+    font-family: monospace;
+    transition: background-color;
+    transition-duration: 400ms;
+    box-sizing: border-box;
+    font-size: 0.95rem;
+}
+
+.wrapper {
+    display: flex;
+}
+
+.inner {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+
+.wrapper.is-open .inner {
+    max-height: 100%;
+}
+
+:root {
+    /*COLORES*/
+    --negro: rgb(23, 23, 23);
+    --blanco: rgb(250, 250, 250);
+    --toastify-toast-min-height: 42px;
+}
+
+html[data-theme="dark"] {
+    --fondo: var(--negro);
+}
+
+html[data-theme="light"] {
+    --fondo: var(--blanco);
+}
+
+body {
+    background-color: var(--fondo);
+}
+
+.Toastify__toast-body>div {
+    font-size: 0.775rem !important;
+}

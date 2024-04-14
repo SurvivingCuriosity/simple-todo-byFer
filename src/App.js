@@ -1,51 +1,50 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { FormularioNuevaTarea } from "./components/FormularioNuevaTarea";
 import { Tarea } from "./components/Tarea";
 import { NavCategorias } from "./components/NavCategorias";
 import { PantallaAjustes } from "./components/PantallaAjustes";
-import { TEMAS } from "./context/ThemeContext";
+import { TEMAS, useThemeContext } from "./context/ThemeContext";
 import { ThemeSwitcher } from "./components/ThemeSwitcher";
 import { useTareasContext } from "./context/TareasContext";
-import 'react-toastify/dist/ReactToastify.css';
-import {
-  eliminarTareasCompletadas,
-} from "./context/TareasActions";
+import "react-toastify/dist/ReactToastify.css";
+import { eliminarTareasCompletadas } from "./context/TareasActions";
 import { Bounce, ToastContainer } from "react-toastify";
 
 function App() {
   const { state, dispatch } = useTareasContext();
   const { tareas, categorias, idCategoriaActiva } = state;
+  const { tema } = useThemeContext();
+  const [mostrandoAjustes, setMostrandoAjustes] = useState(false);
 
-  const [mostrandoAjustes, setMostrandoAjustes] = React.useState(false);
-
-  //Son las tareas de la categoria activa	(inicialmente son todas)
-  const [tareasCategoria, setTareasCategoria] = React.useState(tareas.filter((tarea) => tarea.idCategoria === idCategoriaActiva));
+  //Son las tareas de la categoria activa
+  const [tareasCategoria, setTareasCategoria] = useState(
+    tareas.filter((tarea) => tarea.idCategoria === idCategoriaActiva)
+  );
 
   //Establece el tema por defecto
-  React.useEffect(() => {
+  useEffect(() => {
     document.documentElement.setAttribute("data-theme", TEMAS.dark);
   }, []);
 
   //Cuando cambian las tareas o categorias, las anado al localstorage
-  React.useEffect(() => {
+  useEffect(() => {
     // setCategoriasLS(categorias);
   }, [categorias]);
-  React.useEffect(() => {
+  useEffect(() => {
     // setTareasLS(tareas);
   }, [tareas]);
 
   //Cuando se añade una tarea o cambia categoriaActiva, hay que actualizar tareasCategorias para que se renderice en pantalla
-  React.useEffect(() => {
+  useEffect(() => {
     // setCategoriaActivaLS(categoriaActiva);
     setTareasCategoria(
       tareas.filter((tarea) => tarea.idCategoria === idCategoriaActiva)
     );
   }, [idCategoriaActiva, tareas]);
 
-
   const hayTareasCompletadas = () => {
-    return tareas.some((tarea) => tarea.checked === true);
+    return tareas.some((tarea) => tarea.checked === true && tarea.idCategoria === idCategoriaActiva);
   };
 
   const handleEliminarTareasCompletadas = () => {
@@ -102,50 +101,40 @@ function App() {
 
       <NavCategorias />
 
-        <>
-          <ul className="flex flex-col gap-2">
-            {tareasCategoria.length <= 0 ? (
-              <p className="p-4">
-                No hay tareas pendientes...
-              </p>
-            ) : (
-              tareasCategoria.map((tarea) => {
-                return (
-                  <Tarea
-                    key={tarea.id}
-                    tarea={tarea}
-                  />
-                );
-              })
-            )}
-          </ul>
-        </>
-
+      <>
+        <ul className="flex flex-col gap-2">
+          {tareasCategoria.length <= 0 ? (
+            <p className="mx-auto pt-20">No hay tareas pendientes...</p>
+          ) : (
+            tareasCategoria.map((tarea) => {
+              return <Tarea key={tarea.id} tarea={tarea} />;
+            })
+          )}
+        </ul>
+      </>
 
       {hayTareasCompletadas() && (
         <>
-        <button
-          className="mt-2 text-red-400"
-          onClick={handleEliminarTareasCompletadas}
+          <button
+            className="mt-2 text-red-400"
+            onClick={handleEliminarTareasCompletadas}
           >
-          Eliminar tareas completadas
-        </button>
-          </>
+            Eliminar tareas completadas
+          </button>
+        </>
       )}
       <ToastContainer
-          position="top-center"
-          autoClose={2000}
-          hideProgressBar
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="dark"
-          transition={Bounce}
-          toastClassName={`rounded-md border border-neutral-500 m-2 w-10/12 mx-auto bg-neutral-800`} 
-        />
+        position="bottom-center"
+        autoClose={2000}
+        closeOnClick
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme={tema}
+        transition={Bounce}
+        toastClassName={`rounded-md border border-neutral-500 m-2 w-10/12 mx-auto`}
+        style={{fontSize: "0.2em"}}
+      />
     </div>
   );
 }

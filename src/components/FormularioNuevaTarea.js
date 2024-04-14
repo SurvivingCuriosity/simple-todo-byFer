@@ -169,6 +169,7 @@ export function FormularioNuevaTarea() {
                     Categoría
                   </label>
                   <Select
+                    autoFocus={false}
                     isOptionSelected={true}
                     value={
                       idCategoria === ""

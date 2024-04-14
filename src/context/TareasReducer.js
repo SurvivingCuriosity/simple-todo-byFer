@@ -41,6 +41,7 @@ export const tareasReducer = produce((draft, action) => {
     const index = tareas.findIndex((tarea) => tarea.id === action.payload);
     if (index !== -1) {
       tareas.splice(index, 1);
+      toast.success('Tarea eliminada!');
     }
   }
 
