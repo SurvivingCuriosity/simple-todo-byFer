@@ -3,11 +3,11 @@
 @tailwind utilities;
 
 * {
-    font-family: monospace;
     transition: background-color;
     transition-duration: 400ms;
     box-sizing: border-box;
     font-size: 0.95rem;
+    font-family: "Host Grotesk", sans-serif;
 }
 
 .wrapper {

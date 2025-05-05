@@ -70,7 +70,7 @@ export function Tarea({ tarea }) {
         </div>
 
         <div className="flex flex-row items-center justify-end gap-2">
-          <button className="size-7 rounded-full bg-neutral-400 p-1 dark:bg-neutral-600">
+          <button className="size-7 rounded-full bg-neutral-300 p-1 dark:bg-neutral-900">
             <img
               onClick={handleExpandTarea}
               className={`${
@@ -81,7 +81,7 @@ export function Tarea({ tarea }) {
             ></img>
           </button>
           {editandoTarea === true ? (
-            <button className="size-7 rounded-full bg-neutral-400 p-1 dark:bg-neutral-600">
+            <button className="size-7 rounded-full bg-neutral-300 p-1 dark:bg-neutral-900">
               <img
                 onClick={guardarTarea}
                 src={icono_guardar}
@@ -89,7 +89,7 @@ export function Tarea({ tarea }) {
               ></img>
             </button>
           ) : (
-            <button className="size-7 rounded-full bg-neutral-400 p-1 dark:bg-neutral-600">
+            <button className="size-7 rounded-full bg-neutral-300 p-1 dark:bg-neutral-900">
               <img
                 onClick={() => {
                   setEditandoTarea(true);

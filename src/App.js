@@ -52,7 +52,7 @@ function App() {
   };
 
   return (
-    <div className="mx-auto flex min-h-dvh w-full flex-col bg-neutral-50 p-2 text-neutral-900 md:w-8/12 lg:w-7/12 xl:w-6/12 2xl:w-5/12 dark:bg-neutral-900 dark:text-neutral-200">
+    <div className="mx-auto flex min-h-dvh w-full flex-col bg-neutral-100 p-2 text-neutral-900 md:w-8/12 lg:w-7/12 xl:w-6/12 2xl:w-5/12 dark:bg-neutral-900 dark:text-neutral-200">
       <div
         className={`flex flex-col justify-between fixed top-0 z-10 h-dvh w-full dark:bg-black/90 bg-neutral-100/90 backdrop-blur-[2px] ${
           mostrandoAjustes ? "left-0" : "left-full"
@@ -65,7 +65,7 @@ function App() {
         />
       </div>
 
-      <div className="flex w-full items-center justify-between">
+      <div className="mb-2 flex w-full items-center justify-between">
         <button
           aria-label="Botón abrir menú lateral"
           onClick={() => {
@@ -90,12 +90,9 @@ function App() {
           ></span>
         </button>
 
-        <h1 className="text-3xl">Tareas</h1>
-
         <ThemeSwitcher />
       </div>
 
-      <p className="p-2 text-center">Un texto motivador...</p>
 
       <FormularioNuevaTarea />
 

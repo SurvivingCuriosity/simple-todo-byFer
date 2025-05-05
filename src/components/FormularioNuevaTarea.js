@@ -1,10 +1,9 @@
 import React, { useEffect } from "react";
 import Select from "react-select";
-import { FormularioSubtareas } from "./FormularioSubtareas";
-import { PreviewSubtareas } from "./PreviewSubtareas";
-import { useTareasContext } from "../context/TareasContext";
-import { crearTarea } from "../context/TareasActions";
 import { toast } from "react-toastify";
+import { crearTarea } from "../context/TareasActions";
+import { useTareasContext } from "../context/TareasContext";
+
 export function FormularioNuevaTarea() {
   const { dispatch, state } = useTareasContext();
   const { idCategoriaActiva, categorias } = state;
@@ -20,7 +19,7 @@ export function FormularioNuevaTarea() {
     setIdCategoria(
       categorias.find((cat) => cat.id === idCategoriaActiva)?.id ?? ""
     );
-  }, [idCategoriaActiva]);
+  }, [idCategoriaActiva, categorias]);
 
   const handleChangeCategoria = (evt, action) => {
     switch (action.action) {
@@ -55,20 +54,8 @@ export function FormularioNuevaTarea() {
     setSubTareas([]);
   };
 
-  const nuevaSubTarea = (subtarea) => {
-    setSubTareas((prev) => {
-      return [
-        ...prev,
-        {
-          id: Date.now(),
-          text: subtarea,
-          checked: false,
-        },
-      ];
-    });
-  };
-
-  const limpiaCampos = () => {
+  const limpiaCampos = (e) => {
+    e.preventDefault()
     setTituloTarea("");
     setSubTareas([]);
   };
@@ -94,8 +81,7 @@ export function FormularioNuevaTarea() {
       color: "white",
       backgroundColor: "white",
       borderRadius: 8,
-      minHeight: 35.5,
-      height: 35.5,
+      border: '1px solid rgb(115,115,115)',
     }),
     menu: (provided) => ({
       ...provided,
@@ -110,19 +96,19 @@ export function FormularioNuevaTarea() {
     }),
     valueContainer: (provided, state) => ({
       ...provided,
-      height: 35.5,
+      
     }),
     input: (provided, state) => ({
       ...provided,
       margin: "0px",
-      height: 35.5,
+      
     }),
     indicatorSeparator: (state) => ({
       display: "none",
     }),
     indicatorsContainer: (provided, state) => ({
       ...provided,
-      height: 35.5,
+      
     }),
   };
 
@@ -130,16 +116,13 @@ export function FormularioNuevaTarea() {
     <div>
       <form onSubmit={(evt) => handleSubmit(evt)}>
         <div
-          className={`flex w-full items-center gap-4 ${
+          className={`flex w-full items-center gap-4 p-2 bg-neutral-200 dark:bg-neutral-800 ${
             tituloTarea === "" ? "rounded-lg" : "rounded-t-lg"
-          }  bg-neutral-200 dark:bg-neutral-800 p-2`}
+          }`}
         >
-          <label htmlFor="input-crear-tarea" className="text-base font-bold">
-            Tarea
-          </label>
           <input
             id="input-crear-tarea"
-            className="w-full rounded-lg bg-white p-2 text-neutral-800"
+            className="h-[38px] w-full rounded-lg border border-neutral-500 bg-white p-2 text-neutral-800"
             autoFocus
             onChange={(evt) => {
               setTituloTarea(evt.target.value);
@@ -163,11 +146,8 @@ export function FormularioNuevaTarea() {
             <div
               className={`rounded-b-lg bg-neutral-200  dark:bg-neutral-800 inner flex h-full flex-col justify-between`}
             >
-              <div className="p-2">
-                <div className="flex min-h-14 items-start py-2">
-                  <label className="mr-4 mt-1 text-base font-bold">
-                    Categoría
-                  </label>
+              <div className="p-2 pt-0">
+                <div className="flex items-start py-2">
                   <Select
                     autoFocus={false}
                     isOptionSelected={true}
@@ -180,10 +160,10 @@ export function FormularioNuevaTarea() {
                         : {
                             label: categorias.find(
                               (cat) => cat.id === idCategoria
-                            ).nombre,
+                            )?.nombre || "Sin categoría",
                             value: categorias.find(
                               (cat) => cat.id === idCategoria
-                            ).id,
+                            )?.id || "",
                           }
                     }
                     defaultValue={
@@ -192,13 +172,13 @@ export function FormularioNuevaTarea() {
                             label: "Sin categoría",
                             value: "",
                           }
-                        : {
+                          : {
                             label: categorias.find(
                               (cat) => cat.id === idCategoria
-                            ).nombre,
+                            )?.nombre || "Sin categoría",
                             value: categorias.find(
                               (cat) => cat.id === idCategoria
-                            ).id,
+                            )?.id || "",
                           }
                     }
                     isClearable
@@ -217,23 +197,7 @@ export function FormularioNuevaTarea() {
                   />
                 </div>
 
-                <div className="flex min-h-14 flex-col justify-center py-2">
-                  <div className="flex items-center gap-4">
-                    <label className="text-base font-bold">Subtareas: </label>
-                    <FormularioSubtareas
-                      tareaMadre={tituloTarea}
-                      callback={nuevaSubTarea}
-                    />
-                  </div>
-                  {subTareas.length > 0 && (
-                    <PreviewSubtareas
-                      tareaMadre={tituloTarea}
-                      tareas={subTareas}
-                    />
-                  )}
-                </div>
-
-                <div className="flex min-h-14 items-end justify-between">
+                <div className="flex items-end justify-between">
                   <button
                     className="rounded-md border border-red-400 px-3 py-1 text-red-400"
                     onClick={limpiaCampos}
